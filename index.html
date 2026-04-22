@@ -1161,8 +1161,8 @@ function abrirModalBibItem(item){
           <div class="photo-drop" onclick="document.getElementById('bibPhotoInput').click()">
             <div style="font-size:20px;opacity:.6">📷</div>
           </div>
-          <input type="file" id="bibPhotoInput" accept="image/*" multiple style="display:none" onchange="adicionarFotosBib(event)">
-        </div>
+          <input type="file" id="bibPhotoInput" accept="image/*" multiple capture="environment" style="display:none" onchange="adicionarFotosBib(event)">
+          </div>
         
         <div style="flex:1">
           <div class="label" style="font-size:10px; color:var(--cyan2)">🎙 PC / NATIVO</div>
@@ -1823,8 +1823,7 @@ function buildNoEditorCard(no,idx,todos){
          <audio controls src="${no.audio}" style="height:30px;flex:1"></audio>
          <button onclick="removerAudioTemp('fluxo', '${no.id}')" style="background:rgba(192,57,43,.8);color:white;border:none;border-radius:4px;padding:4px 8px;cursor:pointer;font-size:10px;font-weight:bold">✕</button>
       </div>` : ''}
-
-      <input type="file" id="file_${no.id}" accept="image/*" multiple style="display:none" onchange="adicionarFotoNo(event, '${no.id}')">
+      <input type="file" id="file_${no.id}" accept="image/*" multiple capture="environment" style="display:none" onchange="adicionarFotoNo(event, '${no.id}')">
     </div>
   `;
 
