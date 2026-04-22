@@ -459,17 +459,27 @@ function updateTopbar(){
 }
 
 /* ══ ABA PROCEDIMENTOS ══ */
+function buildProcedimentosLista() {
+  const q = S.procBusca.toLowerCase().trim();
+  const procsFiltro = q ? S.procedimentos.filter(p => (p.nome||'').toLowerCase().includes(q) || (p.categoria||'').toLowerCase().includes(q) || (p.veiculoModelo||'').toLowerCase().includes(q)) : S.procedimentos;
+  if(procsFiltro.length === 0) return `<div style="text-align:center;padding:20px;color:var(--chrome);font-size:12px">Nenhum procedimento encontrado.</div>`;
+  
+  return procsFiltro.map(p=>{
+    const steps=p.steps||[];const fotos=steps.reduce((n,s)=>n+(s.fotos?.length||0),0);
+    return`<div class="proc-card" onclick="A.verProcedimento(${p.id})"><div class="proc-card-body"><div class="proc-title">${esc(p.nome)}</div><div class="proc-meta">${p.categoria||'Geral'} · ${fmtDate(p.criadoEm)}</div><div class="proc-badge-row"><span class="proc-badge pb-yellow">⚙ ${steps.length} passo${steps.length!==1?'s':''}</span>${fotos>0?`<span class="proc-badge pb-blue">📷 ${fotos}</span>`:''}${p.categoria?`<span class="proc-badge pb-gray">${esc(p.categoria)}</span>`:''}${p.veiculoModelo?`<span class="proc-badge pb-green">🚗 ${esc(p.veiculoModelo)}</span>`:''}</div></div></div>`;
+  }).join('');
+}
+
 function buildProcedimentos(){
   if(!S.procedimentos.length)return`<div class="empty"><div class="empty-icon">📋</div><div class="empty-title">SEM PROCEDIMENTOS</div><div class="empty-desc">Crie seu primeiro procedimento técnico.</div><button class="btn yellow" style="max-width:240px;margin-top:8px" onclick="A.novoProcedimento()">＋ NOVO PROCEDIMENTO</button></div>`;
   
-  const q = S.procBusca.toLowerCase().trim();
-  const procsFiltro = q ? S.procedimentos.filter(p => (p.nome||'').toLowerCase().includes(q) || (p.categoria||'').toLowerCase().includes(q) || (p.veiculoModelo||'').toLowerCase().includes(q)) : S.procedimentos;
+  const searchHtml = `<div class="bib-search" style="margin-bottom:12px">
+    <span class="bib-search-icon">🔍</span>
+    <input type="text" class="bib-search-input" style="border-color:rgba(245,200,0,.3)" placeholder="Buscar procedimentos…" value="${esc(S.procBusca)}" oninput="A.procBuscar(this.value)" id="procSearchInput">
+    <div class="search-clear" id="procClearBtn" onclick="A.limparBusca('proc')" style="display:${S.procBusca?'flex':'none'}">✕</div>
+  </div>`;
 
-  const searchHtml = `<div class="bib-search" style="margin-bottom:12px"><span class="bib-search-icon">🔍</span><input type="text" class="bib-search-input" style="border-color:rgba(245,200,0,.3)" placeholder="Buscar procedimentos…" value="${esc(S.procBusca)}" oninput="A.procBuscar(this.value)" id="procSearchInput">${S.procBusca?`<div class="search-clear" onclick="A.limparBusca('proc')">✕</div>`:''}</div>`;
-
-  const listaHtml = procsFiltro.length === 0 ? `<div style="text-align:center;padding:20px;color:var(--chrome);font-size:12px">Nenhum procedimento encontrado.</div>` : procsFiltro.map(p=>{const steps=p.steps||[];const fotos=steps.reduce((n,s)=>n+(s.fotos?.length||0),0);return`<div class="proc-card" onclick="A.verProcedimento(${p.id})"><div class="proc-card-body"><div class="proc-title">${esc(p.nome)}</div><div class="proc-meta">${p.categoria||'Geral'} · ${fmtDate(p.criadoEm)}</div><div class="proc-badge-row"><span class="proc-badge pb-yellow">⚙ ${steps.length} passo${steps.length!==1?'s':''}</span>${fotos>0?`<span class="proc-badge pb-blue">📷 ${fotos}</span>`:''}${p.categoria?`<span class="proc-badge pb-gray">${esc(p.categoria)}</span>`:''}${p.veiculoModelo?`<span class="proc-badge pb-green">🚗 ${esc(p.veiculoModelo)}</span>`:''}</div></div></div>`;}).join('');
-
-  return searchHtml + `<div style="display:flex;flex-direction:column;gap:8px">${listaHtml}</div>`;
+  return searchHtml + `<div id="procListContainer" style="display:flex;flex-direction:column;gap:8px">${buildProcedimentosLista()}</div>`;
 }
 
 function buildVerProcedimento(proc){
@@ -572,19 +582,29 @@ function buildTreinoResultado(){
 }
 
 /* ══ ABA FLUXO ══ */
+function buildFluxosLista() {
+  const q = S.fluxoBusca.toLowerCase().trim();
+  const fluxosFiltro = q ? S.fluxos.filter(f => (f.nome||'').toLowerCase().includes(q) || (f.categoria||'').toLowerCase().includes(q)) : S.fluxos;
+  if(fluxosFiltro.length === 0) return `<div style="text-align:center;padding:20px;color:var(--chrome);font-size:12px">Nenhum fluxo encontrado.</div>`;
+  
+  return fluxosFiltro.map(f=>{
+    const nos=f.nos||[];
+    return`<div class="fluxo-card" onclick="A.verFluxo(${f.id})"><div class="fluxo-card-body"><div class="proc-title" style="color:var(--cyan2)">${esc(f.nome)}</div><div class="proc-meta">${nos.length} nó${nos.length!==1?'s':''} · ${fmtDate(f.criadoEm)}</div><div class="proc-badge-row"><span class="proc-badge pb-cyan">🔀 Fluxo</span>${f.categoria?`<span class="proc-badge pb-gray">${esc(f.categoria)}</span>`:''}</div></div></div>`;
+  }).join('');
+}
+
 function buildFluxos(){
   const introHtml = `<div class="card" style="border-color:rgba(34,211,238,.12); margin-bottom:12px;"><div class="card-head"><div class="card-title" style="color:var(--cyan2)">🔀 FLUXO DIAGNÓSTICO</div></div><div class="card-body"><div class="info-box cyan">Crie árvores de decisão. Cada nó tem uma pergunta e opções que levam ao próximo nó ou ao diagnóstico final.</div></div></div>`;
 
   if(!S.fluxos.length) return introHtml + `<div class="empty"><div class="empty-icon">🔀</div><div class="empty-title">SEM FLUXOS</div><div class="empty-desc">Crie seu primeiro fluxo de diagnóstico.</div><button class="btn cyan" style="max-width:240px;margin-top:8px" onclick="A.novoFluxo()">＋ NOVO FLUXO</button></div>`;
 
-  const q = S.fluxoBusca.toLowerCase().trim();
-  const fluxosFiltro = q ? S.fluxos.filter(f => (f.nome||'').toLowerCase().includes(q) || (f.categoria||'').toLowerCase().includes(q)) : S.fluxos;
+  const searchHtml = `<div class="bib-search" style="margin-bottom:12px">
+    <span class="bib-search-icon">🔍</span>
+    <input type="text" class="bib-search-input" style="border-color:rgba(34,211,238,.3)" placeholder="Buscar fluxos…" value="${esc(S.fluxoBusca)}" oninput="A.fluxoBuscar(this.value)" id="fluxoSearchInput">
+    <div class="search-clear" id="fluxoClearBtn" onclick="A.limparBusca('fluxo')" style="display:${S.fluxoBusca?'flex':'none'}">✕</div>
+  </div>`;
 
-  const searchHtml = `<div class="bib-search" style="margin-bottom:12px"><span class="bib-search-icon">🔍</span><input type="text" class="bib-search-input" style="border-color:rgba(34,211,238,.3)" placeholder="Buscar fluxos…" value="${esc(S.fluxoBusca)}" oninput="A.fluxoBuscar(this.value)" id="fluxoSearchInput">${S.fluxoBusca?`<div class="search-clear" onclick="A.limparBusca('fluxo')">✕</div>`:''}</div>`;
-
-  const listaHtml = fluxosFiltro.length === 0 ? `<div style="text-align:center;padding:20px;color:var(--chrome);font-size:12px">Nenhum fluxo encontrado.</div>` : fluxosFiltro.map(f=>{const nos=f.nos||[];return`<div class="fluxo-card" onclick="A.verFluxo(${f.id})"><div class="fluxo-card-body"><div class="proc-title" style="color:var(--cyan2)">${esc(f.nome)}</div><div class="proc-meta">${nos.length} nó${nos.length!==1?'s':''} · ${fmtDate(f.criadoEm)}</div><div class="proc-badge-row"><span class="proc-badge pb-cyan">🔀 Fluxo</span>${f.categoria?`<span class="proc-badge pb-gray">${esc(f.categoria)}</span>`:''}</div></div></div>`;}).join('');
-
-  return introHtml + searchHtml + `<div style="display:flex;flex-direction:column;gap:8px">${listaHtml}</div>`;
+  return introHtml + searchHtml + `<div id="fluxoListContainer" style="display:flex;flex-direction:column;gap:8px">${buildFluxosLista()}</div>`;
 }
 
 function buildVerFluxo(fluxo){
@@ -671,23 +691,36 @@ function buildFluxoExec(){
 }
 
 /* ══ ABA BIBLIOTECA ══ */
-function buildBiblioteca(){
-  const{items,total,pages}=bibPaginaItems();
-  const searchHtml=`<div class="bib-search"><span class="bib-search-icon">🔍</span><input type="text" class="bib-search-input" placeholder="Buscar passos na biblioteca…" value="${esc(S.bibBusca)}" oninput="A.bibBuscar(this.value)" id="bibSearchInput">${S.bibBusca?`<div class="search-clear" onclick="A.limparBusca('bib')">✕</div>`:''}</div>`;
-  const statsHtml=`<div style="display:flex;align-items:center;justify-content:space-between;padding:0 2px"><span style="font-family:var(--font-mono);font-size:10px;color:var(--chrome);text-transform:uppercase">${S.bibBusca?`${total} resultado${total!==1?'s':''}`:total+' passo'+(total!==1?'s':'')+' no total'}</span>${pages>1?`<span style="font-family:var(--font-mono);font-size:10px;color:#fb923c">Pág ${S.bibPagina+1}/${pages}</span>`:''}</div>`;
-  const itensHtml=items.length?`<div class="bib-card">${items.map(b=>{const fotos=b.fotos||[];return`<div class="bib-step-row" onclick="A.verBibItem(${b.id})">
+function buildBibliotecaLista() {
+  const {items,total,pages} = bibPaginaItems();
+  const statsHtml=`<div style="display:flex;align-items:center;justify-content:space-between;padding:0 2px;margin-bottom:8px"><span style="font-family:var(--font-mono);font-size:10px;color:var(--chrome);text-transform:uppercase">${S.bibBusca?`${total} resultado${total!==1?'s':''}`:total+' passo'+(total!==1?'s':'')+' no total'}</span>${pages>1?`<span style="font-family:var(--font-mono);font-size:10px;color:#fb923c">Pág ${S.bibPagina+1}/${pages}</span>`:''}</div>`;
+  
+  const itensHtml = items.length ? `<div class="bib-card">${items.map(b=>{const fotos=b.fotos||[];return`<div class="bib-step-row" onclick="A.verBibItem(${b.id})">
     ${fotos.length?`<div class="bib-step-thumb"><img src="${fotos[0]}" alt="" loading="lazy"></div>`:`<div class="bib-step-thumb-empty">📄</div>`}
     <div class="bib-step-info"><div class="bib-step-title">${esc(b.titulo)}</div><div class="bib-step-meta">${b.categoria||'Geral'}${b.origem?' · '+b.origem:''} ${b.audio ? ' 🎙' : ''}</div></div>
     <div class="bib-step-acts"><button class="bib-btn edit" onclick="event.stopPropagation();A.editarBibItem(${b.id})">✏</button><button class="bib-btn del" onclick="event.stopPropagation();A.deletarBibItem(${b.id})">✕</button></div>
-  </div>`;}).join('')}</div>`:
+  </div>`;}).join('')}</div>` : 
   `<div style="text-align:center;padding:28px;color:var(--chrome);font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:1px">${S.bibBusca?'Nenhum resultado encontrado':'Biblioteca vazia — passos adicionados em procedimentos ou fluxos aparecem aqui'}</div>`;
-  const paginacaoHtml=pages>1?`<div class="bib-pages">${Array.from({length:pages},(_,i)=>`<button class="bib-page-btn${i===S.bibPagina?' on':''}" onclick="A.bibPagina(${i})">${i+1}</button>`).join('')}</div>`:'';
-  return`<div class="card" style="border-color:rgba(251,146,60,.1)">
+  
+  const paginacaoHtml = pages>1 ? `<div class="bib-pages">${Array.from({length:pages},(_,i)=>`<button class="bib-page-btn${i===S.bibPagina?' on':''}" onclick="A.bibPagina(${i})">${i+1}</button>`).join('')}</div>` : '';
+  
+  return statsHtml + itensHtml + paginacaoHtml;
+}
+
+function buildBiblioteca(){
+  const searchHtml=`<div class="bib-search" style="margin-bottom:12px">
+    <span class="bib-search-icon">🔍</span>
+    <input type="text" class="bib-search-input" placeholder="Buscar passos na biblioteca…" value="${esc(S.bibBusca)}" oninput="A.bibBuscar(this.value)" id="bibSearchInput">
+    <div class="search-clear" id="bibClearBtn" onclick="A.limparBusca('bib')" style="display:${S.bibBusca?'flex':'none'}">✕</div>
+  </div>`;
+  
+  return `<div class="card" style="border-color:rgba(251,146,60,.1)">
     <div class="card-head"><div class="card-title" style="color:#fb923c">📚 BIBLIOTECA DE PASSOS</div></div>
     <div class="card-body"><div class="info-box orange">Todos os passos criados em procedimentos e fluxos ficam aqui. Use a busca para encontrar e reutilizar.</div></div>
   </div>
-  ${searchHtml}${statsHtml}${itensHtml}${paginacaoHtml}
-  <button class="btn ghost-orange sm" onclick="A.novoBibItem()">＋ NOVO PASSO NA BIBLIOTECA</button>`;
+  ${searchHtml}
+  <div id="bibListContainer">${buildBibliotecaLista()}</div>
+  <button class="btn ghost-orange sm" onclick="A.novoBibItem()" style="margin-top:12px">＋ NOVO PASSO NA BIBLIOTECA</button>`;
 }
 
 /* ══ ABA HISTÓRICO ══ */
@@ -717,15 +750,17 @@ const A={
     if(tipo==='bib'){ S.bibBusca=''; S.bibPagina=0; }
     if(tipo==='proc'){ S.procBusca=''; }
     if(tipo==='fluxo'){ S.fluxoBusca=''; }
-    render();
+    render(); // Ao limpar no X, não tem problema dar render geral
   },
-  procBuscar(val){
-    S.procBusca=val; render();
-    setTimeout(()=>{const i=document.getElementById('procSearchInput');if(i){i.focus();i.setSelectionRange(i.value.length,i.value.length);}},10);
+procBuscar(val){
+    S.procBusca = val;
+    const btn = document.getElementById('procClearBtn'); if(btn) btn.style.display = val ? 'flex' : 'none';
+    const lista = document.getElementById('procListContainer'); if(lista) lista.innerHTML = buildProcedimentosLista();
   },
   fluxoBuscar(val){
-    S.fluxoBusca=val; render();
-    setTimeout(()=>{const i=document.getElementById('fluxoSearchInput');if(i){i.focus();i.setSelectionRange(i.value.length,i.value.length);}},10);
+    S.fluxoBusca = val;
+    const btn = document.getElementById('fluxoClearBtn'); if(btn) btn.style.display = val ? 'flex' : 'none';
+    const lista = document.getElementById('fluxoListContainer'); if(lista) lista.innerHTML = buildFluxosLista();
   },
   /* ── Procedimentos ── */
   novoProcedimento(){S.editandoProc=null;abrirModalProc(null);},
@@ -892,24 +927,16 @@ const A={
   sairFluxo(){S.fluxoExec=null;if(S.viewFluxoId){const f=S.fluxos.find(x=>x.id===S.viewFluxoId);if(f){document.getElementById('body').innerHTML=buildVerFluxo(f);document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));return;}}S.tab='fluxo';render();},
 
   /* ── BIBLIOTECA ── */
-  /* ── BIBLIOTECA ── */
-  bibBuscar(val){
-    S.bibBusca = val;
-    S.bibPagina = 0;
-    render(); // Redesenha a tela
-    
-    // MÁGICA DO FOCO: Devolve o cursor para a caixa de pesquisa instantaneamente
-    setTimeout(() => {
-      const input = document.getElementById('bibSearchInput');
-      if (input) {
-        input.focus(); // Clica na caixa de novo
-        // Garante que o cursor de digitação fique no final da palavra
-        const tamanho = input.value.length;
-        input.setSelectionRange(tamanho, tamanho);
-      }
-    }, 10);
+bibBuscar(val){
+    S.bibBusca = val; S.bibPagina = 0;
+    const btn = document.getElementById('bibClearBtn'); if(btn) btn.style.display = val ? 'flex' : 'none';
+    const lista = document.getElementById('bibListContainer'); if(lista) lista.innerHTML = buildBibliotecaLista();
   },
-  bibPagina(p){S.bibPagina=p;render();},
+  bibPagina(p){
+    S.bibPagina = p;
+    const lista = document.getElementById('bibListContainer');
+    if(lista) lista.innerHTML = buildBibliotecaLista(); else render();
+  },
   novoBibItem(){abrirModalBibItem(null);},
   editarBibItem(id){const b=S.biblioteca.find(x=>x.id===id);if(!b)return;abrirModalBibItem(b);},
   verBibItem(id){const b=S.biblioteca.find(x=>x.id===id);if(!b)return;abrirModalVerBibItem(b);},
