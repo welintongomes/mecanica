@@ -1,0 +1,2010 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>🔧 MecânicoPro — Procedimentos Técnicos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --ink:#0d0e0f;--steel:#1a1d1f;--steel2:#242729;--steel3:#2e3235;
+  --chrome:#8a9299;--chrome2:#bcc4ca;
+  --yellow:#f5c800;--yellow2:#ffda44;--orange:#e07b00;
+  --red:#c0392b;--green:#27ae60;--green2:#2ecc71;--blue:#2980b9;
+  --purple:#8e44ad;--purple2:#a855f7;--cyan:#0891b2;--cyan2:#22d3ee;
+  --glow:0 0 20px rgba(245,200,0,.25);
+  --font-head:'Bebas Neue',sans-serif;
+  --font-mono:'Share Tech Mono',monospace;
+  --font-body:'Rajdhani',sans-serif;
+  --r:6px;--r2:10px;
+}
+html,body{height:100%;width:100%;background:var(--ink);color:var(--chrome2);font-family:var(--font-body);font-size:15px;overflow:hidden;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.012) 0px,rgba(255,255,255,.012) 1px,transparent 1px,transparent 40px),repeating-linear-gradient(0deg,rgba(255,255,255,.012) 0px,rgba(255,255,255,.012) 1px,transparent 1px,transparent 40px);}
+#app{position:relative;z-index:1;display:flex;flex-direction:column;height:100%;max-width:1000px;margin:0 auto;overflow:hidden;}
+#topbar{background:var(--steel);border-bottom:3px solid var(--yellow);padding:0 14px;display:flex;align-items:stretch;flex-shrink:0;position:relative;z-index:50;box-shadow:0 4px 20px rgba(0,0,0,.6);}
+.topbar-logo{display:flex;align-items:center;gap:10px;padding:10px 0;flex:1;min-width:0;}
+.logo-icon{width:36px;height:36px;background:var(--yellow);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;box-shadow:inset 0 -2px 0 rgba(0,0,0,.3);}
+.logo-text{font-family:var(--font-head);font-size:21px;letter-spacing:2px;color:var(--yellow);line-height:1;text-shadow:0 0 30px rgba(245,200,0,.3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.logo-sub{font-family:var(--font-mono);font-size:9px;color:var(--chrome);letter-spacing:2px;text-transform:uppercase;line-height:1;margin-top:2px;}
+.topbar-actions{display:flex;align-items:center;gap:5px;flex-shrink:0;}
+.icon-btn{width:34px;height:34px;border-radius:var(--r);border:1px solid var(--steel3);background:var(--steel2);color:var(--chrome);display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer;transition:all .15s;flex-shrink:0;}
+.icon-btn:active{transform:scale(.88);}
+.icon-btn.yellow{border-color:rgba(245,200,0,.4);background:rgba(245,200,0,.08);color:var(--yellow);}
+.icon-btn.cyan{border-color:rgba(8,145,178,.4);background:rgba(8,145,178,.08);color:var(--cyan2);}
+#tabs{display:flex;background:var(--steel2);border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0;overflow-x:auto;scrollbar-width:none;}
+#tabs::-webkit-scrollbar{display:none;}
+.tab{flex:1;min-width:52px;padding:9px 3px;font-family:var(--font-body);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--chrome);cursor:pointer;text-align:center;border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap;user-select:none;}
+.tab.on{color:var(--yellow);border-color:var(--yellow);}
+.tab.on.treino-tab{color:#a855f7;border-color:#a855f7;}
+.tab.on.fluxo-tab{color:var(--cyan2);border-color:var(--cyan2);}
+.tab.on.bib-tab{color:#fb923c;border-color:#fb923c;}
+.tab:active{opacity:.7;}
+#body{flex:1;overflow-y:auto;overflow-x:hidden;padding:14px;display:flex;flex-direction:column;gap:12px;scrollbar-width:thin;scrollbar-color:rgba(245,200,0,.2) transparent;}
+#body::-webkit-scrollbar{width:3px;}
+#body::-webkit-scrollbar-thumb{background:rgba(245,200,0,.2);border-radius:99px;}
+.card{background:var(--steel);border:1px solid rgba(255,255,255,.06);border-radius:var(--r2);overflow:visible;animation:slideIn .2s ease;position:relative;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(245,200,0,.3),transparent);pointer-events:none;}
+@keyframes slideIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.card-head{padding:10px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.05);background:rgba(0,0,0,.2);}
+.card-title{font-family:var(--font-head);font-size:16px;letter-spacing:1.5px;color:var(--chrome2);display:flex;align-items:center;gap:8px;}
+.card-body{padding:14px;display:flex;flex-direction:column;gap:10px;}
+.btn{padding:11px 16px;border-radius:var(--r);border:none;font-family:var(--font-body);font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:all .15s;width:100%;position:relative;overflow:hidden;}
+.btn::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.07) 0%,transparent 60%);pointer-events:none;}
+.btn:active{transform:scale(.96);}
+.btn:disabled{opacity:.3;cursor:default;transform:none!important;}
+.btn.yellow{background:linear-gradient(135deg,var(--yellow),var(--orange));color:var(--ink);font-weight:800;box-shadow:0 4px 16px rgba(245,200,0,.2);}
+.btn.steel{background:var(--steel3);border:1px solid rgba(255,255,255,.08);color:var(--chrome2);}
+.btn.red{background:linear-gradient(135deg,var(--red),#8e1010);color:white;}
+.btn.green{background:linear-gradient(135deg,var(--green),#1a6b3a);color:white;}
+.btn.purple{background:linear-gradient(135deg,var(--purple),#5b2a7a);color:white;}
+.btn.cyan{background:linear-gradient(135deg,var(--cyan),#065985);color:white;box-shadow:0 4px 16px rgba(8,145,178,.2);}
+.btn.orange-btn{background:linear-gradient(135deg,#ea580c,#9a3412);color:white;}
+.btn.sm{padding:15px 12px;font-size:12px;width:auto;flex:1;}
+.btn.ghost{background:transparent;border:1px solid rgba(245,200,0,.3);color:var(--yellow);}
+.btn.ghost-cyan{background:transparent;border:1px solid rgba(8,145,178,.3);color:var(--cyan2);}
+.btn.ghost-orange{background:transparent;border:1px solid rgba(234,88,12,.3);color:#fb923c;}
+.input,.textarea,select.input{width:100%;background:var(--ink);color:var(--chrome2);border:1px solid rgba(255,255,255,.1);border-radius:var(--r);padding:10px 12px;font-size:14px;font-family:var(--font-body);font-weight:600;outline:none;appearance:none;transition:border-color .2s;}
+.input:focus,.textarea:focus{border-color:rgba(245,200,0,.5);box-shadow:0 0 0 3px rgba(245,200,0,.06);}
+.textarea{min-height:70px;resize:vertical;line-height:1.5;}
+select.input{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath fill='rgba(140,145,150,0.6)' d='M6 8L0 0h12z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:34px;cursor:pointer;}
+.label{font-size:10px;color:var(--chrome);font-family:var(--font-mono);font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px;display:flex;align-items:center;gap:6px;}
+.label::before{content:'▸';color:var(--yellow);font-size:8px;}
+.photo-drop{border:2px dashed rgba(245,200,0,.25);border-radius:var(--r2);padding:14px;text-align:center;cursor:pointer;transition:all .2s;background:rgba(245,200,0,.02);display:flex;flex-direction:column;align-items:center;gap:6px;}
+.photo-drop:active{border-color:var(--yellow);background:rgba(245,200,0,.06);}
+.photo-previews{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;}
+.photo-thumb{width:72px;height:72px;border-radius:var(--r);overflow:hidden;border:2px solid rgba(255,255,255,.1);position:relative;flex-shrink:0;background:var(--steel2);}
+.photo-thumb img{width:100%;height:100%;object-fit:cover;}
+.photo-del{position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:50%;background:rgba(192,57,43,.9);color:white;display:flex;align-items:center;justify-content:center;font-size:10px;cursor:pointer;font-weight:800;}
+.step-card{background:var(--steel);border:1px solid rgba(255,255,255,.06);border-radius:var(--r2);overflow:hidden;position:relative;}
+.step-num-col{position:absolute;left:0;top:0;bottom:0;width:40px;background:var(--steel2);border-right:1px solid rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;}
+.step-num{font-family:var(--font-head);font-size:20px;color:var(--yellow);line-height:1;}
+.step-body{margin-left:40px;padding:10px 12px;}
+.step-title{font-family:var(--font-head);font-size:16px;letter-spacing:1px;color:var(--chrome2);}
+.step-desc{font-size:12px;color:var(--chrome);line-height:1.5;margin-top:3px;}
+.step-imgs{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;}
+.step-img{width:76px;height:60px;border-radius:var(--r);overflow:hidden;border:1px solid rgba(255,255,255,.1);cursor:pointer;background:var(--steel2);}
+.step-img img{width:100%;height:100%;object-fit:cover;}
+.step-footer{display:flex;align-items:center;justify-content:space-between;padding:6px 12px 8px;border-top:1px solid rgba(255,255,255,.04);margin-top:6px;gap:6px;}
+.step-tag{font-family:var(--font-mono);font-size:9px;color:var(--chrome);text-transform:uppercase;letter-spacing:1px;background:rgba(0,0,0,.3);padding:3px 6px;border-radius:4px;border:1px solid rgba(255,255,255,.06);}
+.step-actions{display:flex;gap:4px;}
+.step-mini-btn{padding:4px 8px;border-radius:var(--r);border:none;cursor:pointer;font-family:var(--font-body);font-size:11px;font-weight:700;text-transform:uppercase;transition:all .15s;display:flex;align-items:center;gap:3px;}
+.step-mini-btn:active{transform:scale(.9);}
+.step-mini-btn.edit{background:rgba(41,128,185,.15);color:#5dade2;border:1px solid rgba(41,128,185,.25);}
+.step-mini-btn.del{background:rgba(192,57,43,.1);color:#e74c3c;border:1px solid rgba(192,57,43,.2);}
+.step-mini-btn.up{background:rgba(245,200,0,.08);color:var(--yellow);border:1px solid rgba(245,200,0,.2);}
+.step-mini-btn.dn{background:rgba(245,200,0,.08);color:var(--yellow);border:1px solid rgba(245,200,0,.2);}
+.exec-progress{display:flex;align-items:center;gap:0;padding:0 14px;margin:8px 0;overflow-x:auto;scrollbar-width:none;}
+.exec-progress::-webkit-scrollbar{display:none;}
+.exec-dot{width:22px;height:22px;border-radius:50%;flex-shrink:0;background:var(--steel2);border:2px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:8px;color:var(--chrome);transition:all .3s;}
+.exec-dot.done{background:var(--green);border-color:var(--green2);color:white;}
+.exec-dot.active{background:var(--yellow);border-color:var(--yellow2);color:var(--ink);font-weight:900;box-shadow:var(--glow);}
+.exec-line{flex:1;min-width:6px;height:2px;background:rgba(255,255,255,.08);}
+.exec-line.done{background:var(--green);}
+.exec-step-card{background:var(--steel);border-radius:var(--r2);overflow:hidden;border:2px solid rgba(245,200,0,.2);box-shadow:var(--glow);}
+.exec-step-head{background:linear-gradient(90deg,rgba(245,200,0,.1),rgba(245,200,0,.02));padding:12px 16px;border-bottom:1px solid rgba(245,200,0,.15);display:flex;align-items:center;gap:12px;}
+.exec-num-badge{width:36px;height:36px;border-radius:var(--r);background:var(--yellow);color:var(--ink);font-family:var(--font-head);font-size:20px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.exec-step-title{font-family:var(--font-head);font-size:20px;letter-spacing:1px;color:white;}
+.exec-step-body{padding:14px 16px;display:flex;flex-direction:column;gap:10px;}
+.exec-step-desc{font-size:14px;color:var(--chrome2);line-height:1.7;font-weight:500;}
+.exec-imgs{display:flex;flex-wrap:wrap;gap:8px;}
+.exec-img{border-radius:var(--r);overflow:hidden;border:1px solid rgba(255,255,255,.1);cursor:pointer;background:var(--steel2);max-width:100%;}
+.exec-img img{width:100%;display:block;max-height:200px;object-fit:contain;background:#000;}
+.exec-foot{padding:10px 16px;border-top:1px solid rgba(255,255,255,.05);display:flex;gap:8px;}
+.step-done-card{border-radius:var(--r2);border:1px solid rgba(39,174,96,.2);background:rgba(39,174,96,.04);display:flex;align-items:center;gap:10px;padding:8px 12px;}
+.done-check{width:28px;height:28px;border-radius:50%;background:var(--green);color:white;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.done-num{font-family:var(--font-head);font-size:13px;color:var(--green2);flex-shrink:0;}
+.done-name{font-family:var(--font-body);font-size:12px;font-weight:600;color:rgba(255,255,255,.5);}
+.seq-error-box{background:rgba(192,57,43,.08);border:2px solid rgba(192,57,43,.4);border-radius:var(--r2);padding:14px;display:flex;flex-direction:column;gap:8px;animation:slideIn .25s ease;}
+.seq-error-title{font-family:var(--font-head);font-size:18px;letter-spacing:1px;color:#e74c3c;}
+.seq-missing-list{display:flex;flex-direction:column;gap:5px;}
+.seq-missing-item{display:flex;align-items:center;gap:8px;padding:7px 10px;background:rgba(0,0,0,.3);border-radius:var(--r);border-left:3px solid var(--red);}
+.seq-missing-num{font-family:var(--font-head);font-size:16px;color:var(--red);flex-shrink:0;width:24px;text-align:center;}
+.seq-missing-name{font-size:12px;font-weight:600;color:var(--chrome2);}
+.treino-card{background:var(--steel);border:1px solid rgba(168,85,247,.15);border-radius:var(--r2);overflow:hidden;position:relative;}
+.treino-step{background:var(--steel2);border:1.5px solid rgba(255,255,255,.07);border-radius:var(--r2);overflow:hidden;cursor:pointer;transition:all .2s;user-select:none;}
+.treino-step:active{transform:scale(.97);}
+.treino-step.correct{border-color:var(--green2);background:rgba(46,204,113,.05);animation:correctFlash .4s ease;}
+.treino-step.wrong{border-color:var(--red);background:rgba(192,57,43,.06);animation:wrongShake .4s ease;}
+@keyframes correctFlash{0%{background:rgba(46,204,113,.25)}100%{background:rgba(46,204,113,.05)}}
+@keyframes wrongShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.treino-slot{width:40px;min-height:50px;background:rgba(0,0,0,.25);border-right:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:20px;color:rgba(255,255,255,.12);flex-shrink:0;transition:all .2s;}
+.treino-slot.filled{color:var(--yellow);background:rgba(245,200,0,.06);}
+.treino-slot.correct-slot{color:var(--green2);background:rgba(46,204,113,.06);}
+.treino-step-body{flex:1;padding:9px 11px;}
+.treino-step-title{font-family:var(--font-head);font-size:15px;letter-spacing:.8px;color:var(--chrome2);}
+.treino-step-desc{font-size:11px;color:var(--chrome);margin-top:2px;}
+.treino-step-thumb{width:48px;height:40px;border-radius:4px;overflow:hidden;flex-shrink:0;margin-right:8px;background:var(--steel3);}
+.treino-step-thumb img{width:100%;height:100%;object-fit:cover;}
+.treino-feedback{background:rgba(192,57,43,.07);border:2px solid rgba(192,57,43,.35);border-radius:var(--r2);padding:12px;display:flex;flex-direction:column;gap:8px;animation:slideIn .25s ease;}
+.treino-feedback.ok{background:rgba(39,174,96,.07);border-color:rgba(39,174,96,.4);}
+.treino-feedback-title{font-family:var(--font-head);font-size:18px;letter-spacing:1px;}
+.tf-red{color:#e74c3c;}
+.tf-green{color:var(--green2);}
+.treino-progress{height:5px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden;margin:4px 0;}
+.treino-progress-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--purple),var(--purple2));transition:width .5s ease;}
+.treino-score-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-family:var(--font-mono);font-size:11px;font-weight:700;}
+.tsb-green{background:rgba(46,204,113,.1);color:var(--green2);border:1px solid rgba(46,204,113,.2);}
+.tsb-red{background:rgba(192,57,43,.1);color:#e74c3c;border:1px solid rgba(192,57,43,.2);}
+.gabarito-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:var(--r);border:1px solid rgba(255,255,255,.05);background:var(--steel2);}
+.gabarito-num{font-family:var(--font-head);font-size:16px;flex-shrink:0;width:24px;text-align:center;}
+.gabarito-num.ok{color:var(--green2);}
+.gabarito-num.err{color:var(--red);}
+.proc-card{background:var(--steel);border:1px solid rgba(255,255,255,.06);border-radius:var(--r2);overflow:hidden;cursor:pointer;transition:all .15s;position:relative;}
+.proc-card::after{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--yellow);opacity:0;transition:opacity .2s;}
+.proc-card:active,.proc-card:hover{background:var(--steel2);}
+.proc-card:active::after,.proc-card:hover::after{opacity:1;}
+.proc-card-body{padding:11px 13px;}
+.proc-title{font-family:var(--font-head);font-size:17px;letter-spacing:1px;color:var(--chrome2);}
+.proc-meta{font-family:var(--font-mono);font-size:10px;color:var(--chrome);text-transform:uppercase;letter-spacing:1px;margin-top:3px;}
+.proc-badge-row{display:flex;gap:5px;margin-top:7px;flex-wrap:wrap;}
+.proc-badge{font-family:var(--font-mono);font-size:9px;padding:2px 7px;border-radius:4px;border:1px solid;text-transform:uppercase;letter-spacing:.5px;}
+.pb-yellow{background:rgba(245,200,0,.08);color:var(--yellow);border-color:rgba(245,200,0,.2);}
+.pb-green{background:rgba(39,174,96,.08);color:var(--green2);border-color:rgba(39,174,96,.2);}
+.pb-blue{background:rgba(41,128,185,.08);color:#5dade2;border-color:rgba(41,128,185,.2);}
+.pb-gray{background:rgba(255,255,255,.04);color:var(--chrome);border-color:rgba(255,255,255,.1);}
+.pb-purple{background:rgba(168,85,247,.08);color:var(--purple2);border-color:rgba(168,85,247,.2);}
+.pb-cyan{background:rgba(8,145,178,.08);color:var(--cyan2);border-color:rgba(8,145,178,.2);}
+.pb-orange{background:rgba(234,88,12,.08);color:#fb923c;border-color:rgba(234,88,12,.2);}
+/* ══ FLUXO ══ */
+.fluxo-card{background:var(--steel);border:1px solid rgba(34,211,238,.12);border-radius:var(--r2);overflow:hidden;cursor:pointer;transition:all .15s;position:relative;}
+.fluxo-card::after{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--cyan2);opacity:0;transition:opacity .2s;}
+.fluxo-card:active,.fluxo-card:hover{background:var(--steel2);}
+.fluxo-card:active::after,.fluxo-card:hover::after{opacity:1;}
+.fluxo-card-body{padding:11px 13px;}
+.fluxo-node-card{background:var(--steel);border:2px solid rgba(34,211,238,.25);border-radius:var(--r2);overflow:scroll;box-shadow:0 0 20px rgba(34,211,238,.08);}
+.fluxo-node-head{background:linear-gradient(90deg,rgba(34,211,238,.1),rgba(34,211,238,.02));padding:12px 16px;border-bottom:1px solid rgba(34,211,238,.15);display:flex;align-items:flex-start;gap:10px;}
+.fluxo-q-badge{background:var(--cyan);color:white;font-family:var(--font-head);font-size:11px;padding:3px 8px;border-radius:var(--r);flex-shrink:0;letter-spacing:1px;}
+.fluxo-question{font-family:var(--font-head);font-size:18px;letter-spacing:1px;color:white;line-height:1.3;}
+.fluxo-desc{font-size:13px;color:var(--chrome);line-height:1.6;padding:10px 16px 0;}
+.fluxo-opts{display:flex;flex-direction:column;gap:8px;padding:12px 16px 14px;}
+.fluxo-opt-btn{padding:12px 16px;border-radius:var(--r);border:1.5px solid rgba(34,211,238,.25);background:rgba(34,211,238,.04);color:var(--cyan2);font-family:var(--font-body);font-size:14px;font-weight:700;text-align:left;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:10px;width:100%;}
+.fluxo-opt-btn:active{transform:scale(.97);background:rgba(34,211,238,.12);}
+.fluxo-opt-arrow{font-size:16px;margin-left:auto;opacity:.5;}
+.fluxo-diag-card{background:rgba(34,211,238,.05);border:2px solid rgba(34,211,238,.35);border-radius:var(--r2);padding:16px;display:flex;flex-direction:column;gap:10px;}
+.fluxo-diag-title{font-family:var(--font-head);font-size:22px;letter-spacing:1.5px;color:var(--cyan2);}
+.fluxo-diag-desc{font-size:14px;color:var(--chrome2);line-height:1.7;}
+.fluxo-breadcrumb{display:flex;flex-wrap:wrap;gap:4px;padding:8px 14px;background:rgba(0,0,0,.2);}
+.bc-item{font-family:var(--font-mono);font-size:9px;color:var(--chrome);text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:4px;}
+.bc-item::after{content:'›';opacity:.4;}
+.bc-item:last-child::after{content:'';}
+.bc-resp{color:var(--cyan2);}
+/* Construtor de fluxo */
+.no-card-editor{background:var(--steel2);border:1px solid rgba(255,255,255,.07);border-radius:var(--r2);overflow:hidden;}
+.no-card-header{padding:10px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.05);cursor:pointer;}
+.no-card-num{font-family:var(--font-head);font-size:22px;color:var(--cyan2);flex-shrink:0;}
+.no-card-titulo{font-family:var(--font-head);font-size:15px;letter-spacing:.8px;color:var(--chrome2);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.no-card-actions{display:flex;gap:4px;}
+.opt-editor-row{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.04);}
+.opt-label{font-family:var(--font-mono);font-size:10px;color:var(--cyan2);text-transform:uppercase;letter-spacing:1px;flex-shrink:0;width:28px;}
+.opt-input{flex:1;background:rgba(0,0,0,.3);color:var(--chrome2);width: 0%;border:1px solid rgba(255,255,255,.08);border-radius:var(--r);padding:7px 10px;font-size:13px;font-family:var(--font-body);font-weight:600;outline:none;}
+.opt-input:focus{border-color:rgba(34,211,238,.4);}
+.opt-dest-sel{width: 90px;background:rgba(0,0,0,.3);color:var(--cyan2);border:1px solid rgba(34,211,238,.2);border-radius:var(--r);padding:7px 8px;font-size:11px;font-family:var(--font-mono);outline:none;cursor:pointer;}
+/* ══ BIBLIOTECA ══ */
+.bib-card{background:var(--steel);border:1px solid rgba(251,146,60,.1);border-radius:var(--r2);overflow:scroll;}
+.bib-step-row{display:flex;align-items:center;gap:0;padding:0;border-bottom:1px solid rgba(255,255,255,.04);cursor:pointer;transition:background .15s;}
+.bib-step-row:last-child{border-bottom:none;}
+.bib-step-row:active{background:rgba(255,255,255,.03);}
+.bib-step-thumb{width:52px;height:44px;background:var(--steel2);flex-shrink:0;overflow:hidden;}
+.bib-step-thumb img{width:100%;height:100%;object-fit:cover;}
+.bib-step-thumb-empty{width:52px;height:44px;background:var(--steel2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:18px;opacity:.3;}
+.bib-step-info{flex:1;padding:8px 10px;min-width:0;}
+.bib-step-title{font-family:var(--font-head);font-size:14px;letter-spacing:.8px;color:var(--chrome2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.bib-step-meta{font-family:var(--font-mono);font-size:9px;color:var(--chrome);text-transform:uppercase;letter-spacing:.5px;margin-top:2px;}
+.bib-step-acts{display:flex;gap:4px;padding:0 8px;flex-shrink:0;}
+.bib-btn{padding:4px 8px;border-radius:var(--r);border:none;cursor:pointer;font-family:var(--font-body);font-size:11px;font-weight:700;text-transform:uppercase;transition:all .15s;}
+.bib-btn:active{transform:scale(.9);}
+.bib-btn.edit{background:rgba(41,128,185,.15);color:#5dade2;border:1px solid rgba(41,128,185,.25);}
+.bib-btn.del{background:rgba(192,57,43,.1);color:#e74c3c;border:1px solid rgba(192,57,43,.2);}
+.bib-search{position:relative;}
+.bib-search-input{width:100%;background:var(--ink);color:var(--chrome2);border:1.5px solid rgba(251,146,60,.2);border-radius:var(--r);padding:10px 40px 10px 36px;font-size:14px;font-family:var(--font-body);font-weight:600;outline:none;transition:border-color .2s;}
+.search-clear{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.05);color:var(--chrome);display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer;transition:all .15s;font-weight:bold;z-index:2;}
+.search-clear:active{transform:translateY(-50%) scale(.85);background:rgba(255,255,255,.1);color:white;}
+.bib-search-input:focus{border-color:rgba(251,146,60,.5);}
+.bib-search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:15px;opacity:.5;pointer-events:none;}
+.bib-pages{display:flex;align-items:center;justify-content:center;gap:8px;padding:8px 0;}
+.bib-page-btn{width:30px;height:30px;border-radius:var(--r);border:1px solid rgba(255,255,255,.1);background:var(--steel2);color:var(--chrome);font-family:var(--font-mono);font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.bib-page-btn.on{background:rgba(251,146,60,.15);border-color:rgba(251,146,60,.4);color:#fb923c;}
+.bib-page-btn:active{transform:scale(.9);}
+/* Picker de biblioteca */
+.bib-picker-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--r);border:1px solid rgba(255,255,255,.05);background:var(--steel2);cursor:pointer;transition:all .15s;}
+.bib-picker-item:active{background:rgba(34,211,238,.08);border-color:rgba(34,211,238,.3);}
+.bib-picker-thumb{width:44px;height:36px;border-radius:4px;overflow:hidden;background:var(--steel3);flex-shrink:0;}
+.bib-picker-thumb img{width:100%;height:100%;object-fit:cover;}
+.bib-picker-name{font-family:var(--font-head);font-size:14px;letter-spacing:.5px;color:var(--chrome2);}
+.bib-picker-meta{font-family:var(--font-mono);font-size:9px;color:var(--chrome);text-transform:uppercase;}
+/* Modal */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.9);backdrop-filter:blur(10px);z-index:200;display:flex;align-items:flex-end;justify-content:center;animation:bgIn .2s ease;}
+@keyframes bgIn{from{opacity:0}to{opacity:1}}
+.modal{background:var(--steel);border:1px solid rgba(255,255,255,.1);border-radius:14px 14px 0 0;padding:16px 16px 36px;width:100%;max-width:540px;max-height:92vh;overflow-y:auto;display:flex;flex-direction:column;gap:12px;animation:modalUp .3s cubic-bezier(.4,0,.2,1);border-top:3px solid var(--yellow);}
+.modal.cyan-top{border-top-color:var(--cyan2);}
+.modal.orange-top{border-top-color:#fb923c;}
+@keyframes modalUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal-handle{width:36px;height:4px;background:rgba(255,255,255,.12);border-radius:2px;margin:0 auto 4px;}
+.modal h2{font-family:var(--font-head);font-size:22px;letter-spacing:2px;color:var(--chrome2);}
+.modal::-webkit-scrollbar{width:3px;}
+.modal::-webkit-scrollbar-thumb{background:rgba(245,200,0,.15);}
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.97);z-index:500;display:flex;align-items:center;justify-content:center;animation:bgIn .2s;cursor:pointer;}
+.lightbox img{max-width:100%;max-height:100%;object-fit:contain;border-radius:var(--r);}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--steel);border:1px solid rgba(245,200,0,.35);color:var(--chrome2);padding:10px 20px;border-radius:22px;font-family:var(--font-body);font-size:14px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.6),var(--glow);z-index:9999;animation:toastIn .3s ease;pointer-events:none;white-space:nowrap;max-width:94vw;text-align:center;}
+.toast.error{border-color:rgba(192,57,43,.5);}
+.toast.ok{border-color:rgba(39,174,96,.5);}
+.toast.cyan{border-color:rgba(34,211,238,.5);}
+.toast.orange{border-color:rgba(251,146,60,.5);}
+@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(12px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.empty{text-align:center;padding:48px 24px;display:flex;flex-direction:column;align-items:center;gap:12px;}
+.empty-icon{font-size:48px;}
+.empty-title{font-family:var(--font-head);font-size:22px;letter-spacing:2px;color:var(--chrome2);}
+.empty-desc{font-size:13px;color:var(--chrome);line-height:1.7;max-width:260px;}
+.sep{height:1px;background:rgba(255,255,255,.06);margin:2px 0;}
+.warn-box{background:rgba(192,57,43,.07);border:1px solid rgba(192,57,43,.3);border-radius:var(--r);padding:9px 11px;font-size:12px;font-weight:600;color:#e67e73;display:flex;gap:7px;align-items:flex-start;line-height:1.5;}
+.info-box{background:rgba(245,200,0,.05);border:1px solid rgba(245,200,0,.2);border-radius:var(--r);padding:9px 11px;font-family:var(--font-mono);font-size:10px;color:var(--chrome);text-transform:uppercase;letter-spacing:.5px;line-height:1.7;}
+.info-box.cyan{background:rgba(34,211,238,.05);border-color:rgba(34,211,238,.2);color:var(--cyan2);}
+.info-box.orange{background:rgba(251,146,60,.05);border-color:rgba(251,146,60,.2);color:#fb923c;}
+.order-input{width:70px;text-align:center;background:var(--ink);color:var(--yellow);border:1px solid rgba(245,200,0,.3);border-radius:var(--r);padding:8px;font-size:18px;font-family:var(--font-head);outline:none;letter-spacing:1px;}
+.order-input:focus{border-color:var(--yellow);}
+.export-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--steel2);border-radius:var(--r);border:1px solid rgba(255,255,255,.06);}
+.export-cb{width:20px;height:20px;border-radius:4px;border:2px solid rgba(255,255,255,.2);background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all .15s;font-size:13px;}
+.export-cb.on{background:var(--yellow);border-color:var(--yellow);color:var(--ink);}
+.export-name{font-family:var(--font-head);font-size:15px;letter-spacing:.5px;color:var(--chrome2);flex:1;}
+.export-meta{font-family:var(--font-mono);font-size:9px;color:var(--chrome);text-transform:uppercase;}
+#loading{position:fixed;inset:0;background:var(--ink);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;}
+.loading-icon{font-size:48px;animation:spin 2s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-title{font-family:var(--font-head);font-size:28px;letter-spacing:4px;color:var(--yellow);}
+.loading-bar{width:160px;height:3px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden;}
+.loading-fill{height:100%;width:0;background:var(--yellow);border-radius:99px;animation:fill 1.2s ease forwards;}
+@keyframes fill{to{width:100%}}
+
+@keyframes pulseRed {
+  0% { box-shadow: 0 0 0 0 rgba(231,76,60,0.5); }
+  70% { box-shadow: 0 0 0 10px rgba(231,76,60,0); }
+  100% { box-shadow: 0 0 0 0 rgba(231,76,60,0); }
+}
+.gravando-ativo {
+  animation: pulseRed 1.5s infinite;
+  background: rgba(192,57,43,.1) !important;
+  border-color: #e74c3c !important;
+}
+</style>
+</head>
+<body>
+<div id="loading">
+  <div class="loading-icon">🔧</div>
+  <div class="loading-title">MECÂNICO PRO</div>
+  <div class="loading-bar"><div class="loading-fill"></div></div>
+  <div style="font-family:var(--font-mono);font-size:10px;color:var(--chrome);letter-spacing:2px">INICIANDO SISTEMA...</div>
+</div>
+<div id="app" style="display:none">
+  <div id="topbar">
+    <div class="topbar-logo">
+      <div class="logo-icon">🔧</div>
+      <div style="min-width:0">
+        <div class="logo-text" id="topTitle">MECÂNICO PRO</div>
+        <div class="logo-sub" id="topSub">PROCEDIMENTOS TÉCNICOS</div>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <button class="icon-btn" onclick="A.abrirExportImport()" title="Exportar/Importar">⇅</button>
+      <button class="icon-btn yellow" onclick="A.acaoPrincipal()" id="btnMain">＋</button>
+    </div>
+  </div>
+  <div id="tabs">
+    <div class="tab on" data-tab="procedimentos" onclick="A.setTab('procedimentos')">📋 Proc.</div>
+    <div class="tab" data-tab="executar" onclick="A.setTab('executar')">▶ Exec.</div>
+    <div class="tab treino-tab" data-tab="treino" onclick="A.setTab('treino')">🎓 Treino</div>
+    <div class="tab fluxo-tab" data-tab="fluxo" onclick="A.setTab('fluxo')">🔀 Fluxo</div>
+    <div class="tab bib-tab" data-tab="biblioteca" onclick="A.setTab('biblioteca')">📚 Bib.</div>
+    <div class="tab" data-tab="historico" onclick="A.setTab('historico')">📊 Hist.</div>
+  </div>
+  <div id="body"></div>
+</div>
+<input type="file" id="importFileInput" accept=".json" style="display:none" onchange="importarArquivo(event)">
+<script>
+'use strict';
+/* ══ INDEXEDDB ══ */
+const DB={name:'MecanicoPro',ver:7,db:null};
+DB.open=()=>new Promise((res,rej)=>{
+  const req=indexedDB.open(DB.name,DB.ver);
+  req.onupgradeneeded=e=>{
+    const d=e.target.result;
+    if(!d.objectStoreNames.contains('procedimentos'))d.createObjectStore('procedimentos',{keyPath:'id',autoIncrement:true});
+    if(!d.objectStoreNames.contains('execucoes')){const es=d.createObjectStore('execucoes',{keyPath:'id',autoIncrement:true});es.createIndex('procId','procId',{unique:false});}
+    if(!d.objectStoreNames.contains('treino_scores')){const ts=d.createObjectStore('treino_scores',{keyPath:'id',autoIncrement:true});ts.createIndex('procId','procId',{unique:false});}
+    if(!d.objectStoreNames.contains('fluxos'))d.createObjectStore('fluxos',{keyPath:'id',autoIncrement:true});
+    if(!d.objectStoreNames.contains('biblioteca')){const bs=d.createObjectStore('biblioteca',{keyPath:'id',autoIncrement:true});bs.createIndex('titulo','titulo',{unique:false});}
+  };
+  req.onsuccess=e=>{DB.db=e.target.result;res(DB.db);};
+  req.onerror=()=>rej(req.error);
+});
+DB.put=(s,v)=>new Promise((r,j)=>{const tx=DB.db.transaction(s,'readwrite');const q=tx.objectStore(s).put(v);q.onsuccess=()=>r(q.result);q.onerror=()=>j(q.error);});
+DB.get=(s,k)=>new Promise((r,j)=>{const tx=DB.db.transaction(s,'readonly');const q=tx.objectStore(s).get(k);q.onsuccess=()=>r(q.result);q.onerror=()=>j(q.error);});
+DB.getAll=(s)=>new Promise((r,j)=>{const tx=DB.db.transaction(s,'readonly');const q=tx.objectStore(s).getAll();q.onsuccess=()=>r(q.result);q.onerror=()=>j(q.error);});
+DB.del=(s,k)=>new Promise((r,j)=>{const tx=DB.db.transaction(s,'readwrite');const q=tx.objectStore(s).delete(k);q.onsuccess=()=>r(q.result);q.onerror=()=>j(q.error);});
+DB.getByIdx=(s,idx,val)=>new Promise((r,j)=>{const tx=DB.db.transaction(s,'readonly');const q=tx.objectStore(s).index(idx).getAll(IDBKeyRange.only(val));q.onsuccess=()=>r(q.result);q.onerror=()=>j(q.error);});
+function lsGet(k,d){try{const v=localStorage.getItem('mp_'+k);return v?JSON.parse(v):d;}catch{return d;}}
+
+/* ══ ESTADO ══ */
+const S={
+  tab:'procedimentos',
+  procedimentos:[],
+  fluxos:[],
+  biblioteca:[],
+  bibPagina:0,
+  bibBusca:'',
+  procBusca:'',  // <-- ADICIONE ESTA LINHA
+  fluxoBusca:'', // <-- ADICIONE ESTA LINHA
+  execAtiva:null,
+  viewProcId:null,
+  viewFluxoId:null,
+  fluxoExec:null, // {fluxoId, historico:[{noId,pergunta,resposta,opcaoIdx}], noAtual}
+  treino:{procId:null,steps:[],respostas:[],stepAtual:0,feedbacks:[],finalizado:false,acertos:0,erros:0},
+};
+const BIB_POR_PAGINA=20;
+
+/* ══ IMAGEM ══ */
+function comprimirImagem(file,maxW=800,q=.72){
+  return new Promise(r=>{
+    const img=new Image();const url=URL.createObjectURL(file);
+    img.onload=()=>{let w=img.width,h=img.height;if(w>maxW){h=Math.round(h*maxW/w);w=maxW;}
+    const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);URL.revokeObjectURL(url);r(c.toDataURL('image/jpeg',q));};img.src=url;
+  });
+}
+
+/* ══ BIBLIOTECA helpers ══ */
+async function salvarNaBiblioteca(item){
+  if(!item.titulo) return null;
+  
+  const tituloBusca = item.titulo.trim().toLowerCase();
+  const existente = S.biblioteca.find(b => (b.titulo || '').trim().toLowerCase() === tituloBusca);
+  
+  if(existente){
+    existente.descricao = item.descricao || existente.descricao;
+    existente.categoria = item.categoria || existente.categoria;
+    if(item.fotos && item.fotos.length > 0) existente.fotos = item.fotos;
+    if(item.audio) existente.audio = item.audio; // ATUALIZANDO O ÁUDIO NA BIBLIOTECA SE ELE EXISTIR
+    existente.alerta = item.alerta || existente.alerta;
+    
+    await DB.put('biblioteca', existente);
+    return existente.id;
+  }
+  
+  const id = await DB.put('biblioteca', {...item, criadoEm: Date.now()});
+  const novo = {...item, id, criadoEm: Date.now()};
+  S.biblioteca.push(novo);
+  return id;
+}
+
+function bibFiltradas(){
+  const q=S.bibBusca.toLowerCase().trim();
+  if(!q)return S.biblioteca;
+  return S.biblioteca.filter(b=>(b.titulo||'').toLowerCase().includes(q)||(b.descricao||'').toLowerCase().includes(q)||(b.categoria||'').toLowerCase().includes(q));
+}
+function bibPaginaItems(){
+  const f=bibFiltradas();
+  const start=S.bibPagina*BIB_POR_PAGINA;
+  return{items:f.slice(start,start+BIB_POR_PAGINA),total:f.length,pages:Math.ceil(f.length/BIB_POR_PAGINA)};
+}
+
+/* ══ RENDER ══ */
+function render(){
+  updateTopbar();
+  const body=document.getElementById('body');if(!body)return;
+  document.querySelectorAll('.tab').forEach(t=>{
+    t.classList.remove('on');
+    if(t.dataset.tab===S.tab)t.classList.add('on');
+  });
+  if(S.tab==='procedimentos'){
+    if(S.viewProcId){
+      const p=S.procedimentos.find(x=>x.id===S.viewProcId);
+      body.innerHTML=p?buildVerProcedimento(p):'';
+      document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+    }else body.innerHTML=buildProcedimentos();
+  }else if(S.tab==='executar'){body.innerHTML=buildExecutar();}
+  else if(S.tab==='treino'){body.innerHTML=buildTreino();}
+  else if(S.tab==='fluxo'){
+    if(S.viewFluxoId&&!S.fluxoExec){
+      const f=S.fluxos.find(x=>x.id===S.viewFluxoId);
+      body.innerHTML=f?buildVerFluxo(f):'';
+      document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+    }else if(S.fluxoExec){
+      body.innerHTML=buildFluxoExec();
+      document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+    }else body.innerHTML=buildFluxos();
+  }else if(S.tab==='biblioteca'){body.innerHTML=buildBiblioteca();}
+  else if(S.tab==='historico'){buildHistorico();}
+}
+
+function updateTopbar(){
+  const t=document.getElementById('topTitle');const sub=document.getElementById('topSub');const btn=document.getElementById('btnMain');
+  if(S.tab==='executar'&&S.execAtiva){
+    const p=S.procedimentos.find(x=>x.id===S.execAtiva.procId);
+    if(t)t.textContent=p?.nome?.toUpperCase()||'EXECUTAR';if(sub)sub.textContent='EXECUÇÃO EM ANDAMENTO';
+    if(btn){btn.style.display='none';}
+  }else if(S.tab==='treino'){
+    if(t)t.textContent='MODO TREINO';if(sub)sub.textContent='SEQUÊNCIA EMBARALHADA';
+    if(btn)btn.style.display='none';
+  }else if(S.tab==='fluxo'){
+    if(t)t.textContent='FLUXO DIAGNÓSTICO';if(sub)sub.textContent='ÁRVORE DE DECISÃO';
+    if(btn){btn.style.display='flex';btn.textContent='＋';btn.onclick=()=>A.novoFluxo();btn.className='icon-btn cyan';}
+  }else if(S.tab==='biblioteca'){
+    if(t)t.textContent='BIBLIOTECA';if(sub)sub.textContent='BANCO DE PASSOS';
+    if(btn){btn.style.display='flex';btn.textContent='＋';btn.onclick=()=>A.novoBibItem();btn.className='icon-btn';}
+    btn.style.setProperty('--color','#fb923c');
+  }else{
+    if(t)t.textContent='MECÂNICO PRO';if(sub)sub.textContent='PROCEDIMENTOS TÉCNICOS';
+    if(btn){btn.style.display='flex';btn.textContent='＋';btn.onclick=()=>A.novoProcedimento();btn.className='icon-btn yellow';}
+  }
+}
+
+/* ══ ABA PROCEDIMENTOS ══ */
+function buildProcedimentos(){
+  if(!S.procedimentos.length)return`<div class="empty"><div class="empty-icon">📋</div><div class="empty-title">SEM PROCEDIMENTOS</div><div class="empty-desc">Crie seu primeiro procedimento técnico.</div><button class="btn yellow" style="max-width:240px;margin-top:8px" onclick="A.novoProcedimento()">＋ NOVO PROCEDIMENTO</button></div>`;
+  
+  const q = S.procBusca.toLowerCase().trim();
+  const procsFiltro = q ? S.procedimentos.filter(p => (p.nome||'').toLowerCase().includes(q) || (p.categoria||'').toLowerCase().includes(q) || (p.veiculoModelo||'').toLowerCase().includes(q)) : S.procedimentos;
+
+  const searchHtml = `<div class="bib-search" style="margin-bottom:12px"><span class="bib-search-icon">🔍</span><input type="text" class="bib-search-input" style="border-color:rgba(245,200,0,.3)" placeholder="Buscar procedimentos…" value="${esc(S.procBusca)}" oninput="A.procBuscar(this.value)" id="procSearchInput">${S.procBusca?`<div class="search-clear" onclick="A.limparBusca('proc')">✕</div>`:''}</div>`;
+
+  const listaHtml = procsFiltro.length === 0 ? `<div style="text-align:center;padding:20px;color:var(--chrome);font-size:12px">Nenhum procedimento encontrado.</div>` : procsFiltro.map(p=>{const steps=p.steps||[];const fotos=steps.reduce((n,s)=>n+(s.fotos?.length||0),0);return`<div class="proc-card" onclick="A.verProcedimento(${p.id})"><div class="proc-card-body"><div class="proc-title">${esc(p.nome)}</div><div class="proc-meta">${p.categoria||'Geral'} · ${fmtDate(p.criadoEm)}</div><div class="proc-badge-row"><span class="proc-badge pb-yellow">⚙ ${steps.length} passo${steps.length!==1?'s':''}</span>${fotos>0?`<span class="proc-badge pb-blue">📷 ${fotos}</span>`:''}${p.categoria?`<span class="proc-badge pb-gray">${esc(p.categoria)}</span>`:''}${p.veiculoModelo?`<span class="proc-badge pb-green">🚗 ${esc(p.veiculoModelo)}</span>`:''}</div></div></div>`;}).join('');
+
+  return searchHtml + `<div style="display:flex;flex-direction:column;gap:8px">${listaHtml}</div>`;
+}
+
+function buildVerProcedimento(proc){
+  const steps=(proc.steps||[]).slice().sort((a,b)=>a.ordem-b.ordem);
+  const stepsHtml=steps.length===0?`<div style="text-align:center;padding:16px;color:var(--chrome);font-family:var(--font-mono);font-size:11px;text-transform:uppercase">Nenhum passo ainda</div>`:steps.map((s,i)=>buildStepCard(s,proc.id,i)).join('');
+  return`<div class="card"><div class="card-head"><div class="card-title">📋 ${esc(proc.nome)}</div><div style="display:flex;gap:5px"><button class="btn ghost sm" style="padding:5px 9px;font-size:11px" onclick="A.editarProc(${proc.id})">✏ EDITAR</button><button class="btn steel sm" style="padding:5px 9px;font-size:11px" onclick="A.fecharProc()">✕</button></div></div><div class="card-body">${proc.descricao?`<div style="font-size:13px;color:var(--chrome);line-height:1.7">${esc(proc.descricao)}</div>`:''}<div style="display:flex;gap:5px;flex-wrap:wrap">${proc.categoria?`<span class="proc-badge pb-gray">📁 ${esc(proc.categoria)}</span>`:''}${proc.veiculoModelo?`<span class="proc-badge pb-green">🚗 ${esc(proc.veiculoModelo)}</span>`:''}<span class="proc-badge pb-yellow">⚙ ${steps.length} passos</span></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn yellow sm" onclick="A.iniciarExec(${proc.id})" style="flex:2">▶ EXECUTAR</button><button class="btn purple sm" onclick="A.iniciarTreino(${proc.id})">🎓 TREINAR</button></div></div></div>
+  <div class="card"><div class="card-head"><div class="card-title">⚙ PASSOS</div><button class="btn yellow sm" style="width:auto;margin: 3px 34px 3px 34px;padding:5px 11px;font-size:11px" onclick="A.novoStep(${proc.id})">＋ PASSO</button></div></div>
+  <div style="display:flex;flex-direction:column;gap:8px" id="stepsContainer">${stepsHtml}</div>
+  ${steps.length>0?`<div class="info-box">⚠ A ORDEM DOS PASSOS É OBRIGATÓRIA NA EXECUÇÃO E TREINO. PASSOS TAMBÉM SÃO SALVOS NA BIBLIOTECA.</div>`:''}`;
+}
+
+function buildStepCard(step,procId,idx){
+  const fotosHtml=step.fotos?.length?`<div class="step-imgs">${step.fotos.map((f,i)=>`<div class="step-img" onclick="lightbox('${f}')"><img src="${f}" alt="${i+1}" loading="lazy"></div>`).join('')}</div>`:'';
+  
+  // NOVA PARTE: Player de Áudio no cartão do passo
+  const audioHtml = step.audio ? `<div style="margin-top:8px; background:rgba(0,0,0,.2); padding:8px; border-radius:4px; border-left:3px solid var(--yellow)">
+    <div style="font-family:var(--font-mono);font-size:9px;color:var(--yellow);text-transform:uppercase;margin-bottom:4px">🎙 Áudio de Instrução</div>
+    <audio controls src="${step.audio}" style="width:100%; height:30px;" onplay="tocarAudioLockScreen('${esc(step.titulo)}')"></audio>
+  </div>` : '';
+
+  return`<div class="step-card" id="sc_${step.id}"><div class="step-num-col"><div class="step-num">${step.ordem}</div></div><div class="step-body"><div class="step-title">${esc(step.titulo)}</div>${step.descricao?`<div class="step-desc">${esc(step.descricao)}</div>`:''} ${audioHtml} ${fotosHtml}${step.alerta?`<div class="warn-box" style="margin-top:5px">⚠ ${esc(step.alerta)}</div>`:''}<div class="step-footer"><div style="display:flex;gap:3px;flex-wrap:wrap">${step.fotos?.length?`<span class="step-tag">📷 ${step.fotos.length}</span>`:''}${step.audio?`<span class="step-tag">🎙 ÁUDIO</span>`:''}${step.alerta?'<span class="step-tag" style="border-color:rgba(192,57,43,.3);color:#e74c3c">⚠</span>':''}</div><div class="step-actions"><button class="step-mini-btn up" onclick="A.moverStep('${step.id}',${procId},-1)">▲</button><button class="step-mini-btn dn" onclick="A.moverStep('${step.id}',${procId},1)">▼</button><button class="step-mini-btn edit" onclick="A.editarStep('${step.id}',${procId})">✏</button><button class="step-mini-btn del" onclick="A.deletarStep('${step.id}',${procId})">✕</button></div></div></div></div>`;
+}
+
+/* ══ ABA EXECUTAR ══ */
+function buildExecutar(){
+  if(!S.procedimentos.length)return`<div class="empty"><div class="empty-icon">▶</div><div class="empty-title">NADA PARA EXECUTAR</div><div class="empty-desc">Crie um procedimento primeiro.</div></div>`;
+  if(!S.execAtiva)return buildSelecionarExec();
+  return buildExecAtiva();
+}
+function buildSelecionarExec(){
+  return`<div class="card"><div class="card-head"><div class="card-title">▶ SELECIONAR PROCEDIMENTO</div></div><div class="card-body"><div class="info-box">Escolha um procedimento para execução guiada.</div></div></div>
+  <div style="display:flex;flex-direction:column;gap:8px">${S.procedimentos.map(p=>`<div class="proc-card" onclick="A.iniciarExec(${p.id})"><div class="proc-card-body"><div class="proc-title">▶ ${esc(p.nome)}</div><div class="proc-meta">${(p.steps||[]).length} passos · ${p.categoria||'Geral'}</div></div></div>`).join('')}</div>`;
+}
+function buildExecAtiva(){
+  const exec=S.execAtiva;const proc=S.procedimentos.find(p=>p.id===exec.procId);if(!proc)return buildSelecionarExec();
+  const steps=(proc.steps||[]).slice().sort((a,b)=>a.ordem-b.ordem);if(!steps.length)return`<div class="empty"><div class="empty-desc">Este procedimento não tem passos.</div></div>`;
+  const done=new Set(exec.stepsDone||[]);const total=steps.length,ndone=done.size;
+  const dotRow=steps.map((s,i)=>`${i>0?`<div class="exec-line${done.has(s.id)?' done':''}"></div>`:''}
+    <div class="exec-dot${done.has(s.id)?' done':exec.stepAtual===s.id?' active':''}">${s.ordem}</div>`).join('');
+  const proximo=steps.find(s=>!done.has(s.id));
+  let conteudo='';
+  if(!proximo){
+    conteudo=`<div style="text-align:center;padding:28px 16px;display:flex;flex-direction:column;align-items:center;gap:14px"><div style="font-size:52px">✅</div><div style="font-family:var(--font-head);font-size:26px;letter-spacing:2px;color:var(--green2)">CONCLUÍDO!</div><div style="font-family:var(--font-mono);font-size:10px;color:var(--chrome);text-transform:uppercase;letter-spacing:1px">${total} passos executados</div><button class="btn green" style="max-width:240px" onclick="A.finalizarExec(true)">✔ SALVAR NO HISTÓRICO</button><button class="btn steel sm" onclick="A.finalizarExec(false)">Descartar</button></div>`;
+  }else{
+    const idxAtual=steps.indexOf(proximo);const faltando=steps.slice(0,idxAtual).filter(s=>!done.has(s.id));
+    const doneCards=steps.filter(s=>done.has(s.id)).map(s=>`<div class="step-done-card"><div class="done-check">✓</div><div class="done-num">#${s.ordem}</div><div class="done-name">${esc(s.titulo)}</div></div>`).join('');
+    conteudo=doneCards+buildExecStepCard(proximo,faltando);
+  }
+  return`<div class="card"><div class="card-head"><div class="card-title">⚙ ${esc(proc.nome)}</div><span style="font-family:var(--font-mono);font-size:10px;color:var(--chrome)">${ndone}/${total}</span></div><div style="padding:8px 14px 5px"><div class="exec-progress">${dotRow}</div><div style="display:flex;justify-content:space-between;padding:0 2px;margin-top:3px"><span style="font-family:var(--font-mono);font-size:9px;color:var(--chrome)">PROGRESSO</span><span style="font-family:var(--font-mono);font-size:9px;color:var(--yellow)">${Math.round((ndone/total)*100)}%</span></div></div></div>
+  <div style="display:flex;flex-direction:column;gap:8px;padding-bottom:20px">${conteudo}<button class="btn ghost sm" onclick="A.confirmarAbandonar()">✕ Abandonar</button></div>`;
+}
+function buildExecStepCard(step,faltando){
+  if(faltando.length>0)return`<div class="seq-error-box"><div class="seq-error-title">⛔ ERRO DE SEQUÊNCIA</div><div style="font-size:12px;color:var(--chrome);line-height:1.5">Passo <strong style="color:white">#${step.ordem} ${esc(step.titulo)}</strong> — conclua antes:</div><div class="seq-missing-list">${faltando.map(s=>`<div class="seq-missing-item"><div class="seq-missing-num">${s.ordem}</div><div class="seq-missing-name">${esc(s.titulo)}</div></div>`).join('')}</div></div>`;
+  const fotosHtml=step.fotos?.length?`<div class="exec-imgs">${step.fotos.map((f,i)=>`<div class="exec-img" onclick="lightbox('${f}')"><img src="${f}" alt="${i+1}" loading="lazy"></div>`).join('')}</div>`:'';
+  return`<div class="exec-step-card"><div class="exec-step-head"><div class="exec-num-badge">${step.ordem}</div><div><div class="exec-step-title">${esc(step.titulo)}</div><div style="font-family:var(--font-mono);font-size:9px;color:rgba(245,200,0,.5);text-transform:uppercase;letter-spacing:1px;margin-top:1px">PRÓXIMO PASSO</div></div></div><div class="exec-step-body">${step.descricao?`<div class="exec-step-desc">${esc(step.descricao)}</div>`:''}${fotosHtml}${step.alerta?`<div class="warn-box">⚠ ${esc(step.alerta)}</div>`:''}</div><div class="exec-foot"><button class="btn green" onclick="A.marcarStepDone('${step.id}')">✔ PASSO CONCLUÍDO</button></div></div>`;
+}
+
+/* ══ ABA TREINO ══ */
+function buildTreino(){
+  const tr=S.treino;
+  if(!S.procedimentos.length)return`<div class="empty"><div class="empty-icon">🎓</div><div class="empty-title">SEM PROCEDIMENTOS</div></div>`;
+  if(!tr.procId)return buildSelecionarTreino();
+  if(tr.finalizado)return buildTreinoResultado();
+  return buildTreinoAtivo();
+}
+function buildSelecionarTreino(){
+  const procs=S.procedimentos.filter(p=>(p.steps||[]).length>=2);
+  if(!procs.length)return`<div class="empty"><div class="empty-icon">🎓</div><div class="empty-title">PASSOS INSUFICIENTES</div><div class="empty-desc">Cada procedimento precisa de pelo menos 2 passos para o modo treino.</div></div>`;
+  return`<div class="treino-card"><div class="card-head"><div class="card-title" style="color:#a855f7">🎓 MODO TREINO</div></div><div class="card-body"><div class="info-box" style="background:rgba(168,85,247,.05);border-color:rgba(168,85,247,.2);color:#a855f7">Os passos aparecem embaralhados. Toque-os na ordem correta.</div></div></div>
+  <div style="display:flex;flex-direction:column;gap:8px">${procs.map(p=>`<div class="proc-card" onclick="A.iniciarTreino(${p.id})"><div class="proc-card-body"><div class="proc-title">🎓 ${esc(p.nome)}</div><div class="proc-meta">${(p.steps||[]).length} passos · ${p.categoria||'Geral'}</div><div class="proc-badge-row"><span class="proc-badge pb-purple">🔀 Embaralhado</span></div></div></div>`).join('')}</div>`;
+}
+function buildTreinoAtivo(){
+  const tr=S.treino;const proc=S.procedimentos.find(p=>p.id===tr.procId);if(!proc)return buildSelecionarTreino();
+  const total=tr.steps.length;const nResp=tr.respostas.length;const pct=Math.round((nResp/total)*100);
+  const respondidosIds=new Set(tr.respostas.map(r=>r.stepId));const pendentes=tr.steps.filter(s=>!respondidosIds.has(s.id));
+  const stepsHtml=pendentes.map(s=>{const thumb=s.fotos?.length?`<div class="treino-step-thumb"><img src="${s.fotos[0]}" alt="" loading="lazy"></div>`:'';
+    return`<div class="treino-step" id="ts_${s.id}" onclick="A.treinoClicarStep('${s.id}')"><div style="display:flex;align-items:center;gap:0"><div class="treino-slot" id="slot_${s.id}">?</div><div class="treino-step-body"><div class="treino-step-title">${esc(s.titulo)}</div>${s.descricao?`<div class="treino-step-desc">${esc(s.descricao).slice(0,70)}…</div>`:''}</div>${thumb}</div></div>`;
+  }).join('');
+  const respostasHtml=tr.respostas.slice().reverse().slice(0,3).map(r=>`<div style="display:flex;align-items:center;gap:7px;padding:6px 10px;background:var(--steel2);border-radius:var(--r);border:1px solid ${r.correto?'rgba(46,204,113,.2)':'rgba(192,57,43,.2)'}"><span style="color:${r.correto?'var(--green2)':'#e74c3c'};font-family:var(--font-head);font-size:15px">${r.correto?'✓':'✗'}</span><span style="font-family:var(--font-head);font-size:13px;color:${r.correto?'var(--green2)':'#e74c3c'}">#${r.ordemDada}</span><span style="font-size:12px;font-weight:600;color:var(--chrome);flex:1">${esc(r.titulo)}</span></div>`).join('');
+  let feedbackHtml='';const ultimaResp=tr.respostas[tr.respostas.length-1];
+  if(ultimaResp&&!ultimaResp.correto){const faltavam=ultimaResp.faltavam||[];feedbackHtml=`<div class="treino-feedback"><div class="treino-feedback-title tf-red">⛔ ORDEM INCORRETA!</div><div style="font-size:12px;color:var(--chrome);line-height:1.5">Tentou colocar <strong style="color:white">"${esc(ultimaResp.titulo)}"</strong> como #${ultimaResp.ordemDada}, mas é <strong style="color:var(--yellow)">#${ultimaResp.ordemCorreta}</strong>.</div>${faltavam.length?`<div class="seq-missing-list">${faltavam.map(f=>`<div class="seq-missing-item"><div class="seq-missing-num">${f.ordem}</div><div class="seq-missing-name">${esc(f.titulo)}</div></div>`).join('')}</div>`:''}
+    <button class="btn ghost sm" style="border-color:rgba(168,85,247,.3);color:#a855f7" onclick="A.treinoDesfazer()">↩ DESFAZER</button></div>`;}
+  else if(ultimaResp&&ultimaResp.correto&&nResp<total){feedbackHtml=`<div class="treino-feedback ok"><div class="treino-feedback-title tf-green">✓ CORRETO! Continue…</div></div>`;}
+  return`<div class="treino-card"><div class="card-head"><div class="card-title" style="color:#a855f7">🎓 ${esc(proc.nome)}</div><div style="display:flex;align-items:center;gap:6px"><span class="treino-score-badge tsb-green">✓ ${tr.acertos}</span><span class="treino-score-badge tsb-red">✗ ${tr.erros}</span></div></div><div style="padding:8px 14px 5px"><div class="treino-progress"><div class="treino-progress-fill" style="width:${pct}%"></div></div><div style="display:flex;justify-content:space-between;margin-top:3px"><span style="font-family:var(--font-mono);font-size:9px;color:var(--chrome)">POSICIONADOS: ${nResp}/${total}</span><span style="font-family:var(--font-mono);font-size:9px;color:#a855f7">${pct}%</span></div></div></div>
+  ${feedbackHtml}
+  <div class="card"><div class="card-head"><div class="card-title">🔀 TOQUE NA ORDEM CORRETA</div></div><div style="padding:7px 13px 13px;display:flex;flex-direction:column;gap:7px"><div style="font-family:var(--font-mono);font-size:10px;color:var(--chrome);text-transform:uppercase;letter-spacing:1px">Posição a preencher: <span style="color:var(--yellow)">#${nResp+1}</span></div>${stepsHtml}</div></div>
+  ${respostasHtml?`<div style="display:flex;flex-direction:column;gap:5px">${respostasHtml}</div>`:''}
+  <button class="btn ghost sm" style="border-color:rgba(192,57,43,.3);color:#e74c3c" onclick="A.abandonarTreino()">✕ Sair do Treino</button>`;
+}
+function buildTreinoResultado(){
+  const tr=S.treino;const proc=S.procedimentos.find(p=>p.id===tr.procId);const total=tr.steps.length;const taxa=Math.round((tr.acertos/total)*100);
+  const nota=taxa===100?'PERFEITO! 🏆':taxa>=80?'MUITO BOM! ⭐':taxa>=60?'BOM 👍':'PRATIQUE MAIS 💪';
+  const corNota=taxa===100?'var(--yellow)':taxa>=80?'var(--green2)':taxa>=60?'#5dade2':'#e74c3c';
+  const stepsOrdenados=(proc?.steps||[]).slice().sort((a,b)=>a.ordem-b.ordem);
+  const gabaritoHtml=stepsOrdenados.map(s=>{const resp=tr.respostas.find(r=>r.stepId===s.id);const ok=resp?.correto;
+    return`<div class="gabarito-item"><div class="gabarito-num ${ok?'ok':'err'}">${ok?'✓':'✗'}</div><div style="flex:1"><div style="font-family:var(--font-head);font-size:13px;letter-spacing:.5px;color:${ok?'var(--chrome2)':'#e74c3c'}">#${s.ordem} ${esc(s.titulo)}</div>${!ok&&resp?`<div style="font-family:var(--font-mono);font-size:9px;color:var(--chrome);text-transform:uppercase">Você colocou como #${resp.ordemDada}</div>`:''}</div></div>`;
+  }).join('');
+  return`<div class="treino-card"><div class="card-head"><div class="card-title" style="color:#a855f7">🎓 RESULTADO</div></div><div class="card-body"><div style="text-align:center;padding:12px 0"><div style="font-family:var(--font-head);font-size:48px;color:${corNota};letter-spacing:2px">${taxa}%</div><div style="font-family:var(--font-head);font-size:20px;color:${corNota};letter-spacing:1px;margin-top:3px">${nota}</div><div style="font-family:var(--font-mono);font-size:10px;color:var(--chrome);text-transform:uppercase;letter-spacing:1px;margin-top:6px">${tr.acertos} certos · ${tr.erros} erros · ${total} total</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn purple sm" onclick="A.iniciarTreino(${tr.procId})" style="flex:2">🔄 TREINAR NOVAMENTE</button><button class="btn steel sm" onclick="A.abandonarTreino()">Voltar</button></div></div></div>
+  <div class="card"><div class="card-head"><div class="card-title">📋 GABARITO</div></div><div style="padding:8px 13px;display:flex;flex-direction:column;gap:5px">${gabaritoHtml}</div></div>`;
+}
+
+/* ══ ABA FLUXO ══ */
+function buildFluxos(){
+  const introHtml = `<div class="card" style="border-color:rgba(34,211,238,.12); margin-bottom:12px;"><div class="card-head"><div class="card-title" style="color:var(--cyan2)">🔀 FLUXO DIAGNÓSTICO</div></div><div class="card-body"><div class="info-box cyan">Crie árvores de decisão. Cada nó tem uma pergunta e opções que levam ao próximo nó ou ao diagnóstico final.</div></div></div>`;
+
+  if(!S.fluxos.length) return introHtml + `<div class="empty"><div class="empty-icon">🔀</div><div class="empty-title">SEM FLUXOS</div><div class="empty-desc">Crie seu primeiro fluxo de diagnóstico.</div><button class="btn cyan" style="max-width:240px;margin-top:8px" onclick="A.novoFluxo()">＋ NOVO FLUXO</button></div>`;
+
+  const q = S.fluxoBusca.toLowerCase().trim();
+  const fluxosFiltro = q ? S.fluxos.filter(f => (f.nome||'').toLowerCase().includes(q) || (f.categoria||'').toLowerCase().includes(q)) : S.fluxos;
+
+  const searchHtml = `<div class="bib-search" style="margin-bottom:12px"><span class="bib-search-icon">🔍</span><input type="text" class="bib-search-input" style="border-color:rgba(34,211,238,.3)" placeholder="Buscar fluxos…" value="${esc(S.fluxoBusca)}" oninput="A.fluxoBuscar(this.value)" id="fluxoSearchInput">${S.fluxoBusca?`<div class="search-clear" onclick="A.limparBusca('fluxo')">✕</div>`:''}</div>`;
+
+  const listaHtml = fluxosFiltro.length === 0 ? `<div style="text-align:center;padding:20px;color:var(--chrome);font-size:12px">Nenhum fluxo encontrado.</div>` : fluxosFiltro.map(f=>{const nos=f.nos||[];return`<div class="fluxo-card" onclick="A.verFluxo(${f.id})"><div class="fluxo-card-body"><div class="proc-title" style="color:var(--cyan2)">${esc(f.nome)}</div><div class="proc-meta">${nos.length} nó${nos.length!==1?'s':''} · ${fmtDate(f.criadoEm)}</div><div class="proc-badge-row"><span class="proc-badge pb-cyan">🔀 Fluxo</span>${f.categoria?`<span class="proc-badge pb-gray">${esc(f.categoria)}</span>`:''}</div></div></div>`;}).join('');
+
+  return introHtml + searchHtml + `<div style="display:flex;flex-direction:column;gap:8px">${listaHtml}</div>`;
+}
+
+function buildVerFluxo(fluxo){
+  const nos=fluxo.nos||[];
+  const noRaiz=nos.find(n=>n.id===fluxo.noRaizId)||nos[0];
+  return`<div class="card" style="border-color:rgba(34,211,238,.15)">
+    <div class="card-head"><div class="card-title" style="color:var(--cyan2)">🔀 ${esc(fluxo.nome)}</div>
+    <div style="display:flex;gap:5px"><button class="btn ghost-cyan sm" style="padding:5px 9px;font-size:11px" onclick="A.editarFluxo(${fluxo.id})">✏ EDITAR</button><button class="btn steel sm" style="padding:5px 9px;font-size:11px" onclick="A.fecharFluxo()">✕</button></div></div>
+    <div class="card-body">${fluxo.descricao?`<div style="font-size:13px;color:var(--chrome);line-height:1.6">${esc(fluxo.descricao)}</div>`:''}
+    <div style="display:flex;gap:5px;flex-wrap:wrap"><span class="proc-badge pb-cyan">🔀 ${nos.length} nós</span>${fluxo.categoria?`<span class="proc-badge pb-gray">${esc(fluxo.categoria)}</span>`:''}</div>
+    <div style="display:flex;gap:8px"><button class="btn cyan sm" onclick="A.iniciarFluxo(${fluxo.id})" style="flex:2">▶ INICIAR DIAGNÓSTICO</button><button class="btn red sm" onclick="A.deletarFluxo(${fluxo.id})">🗑</button></div></div></div>
+  ${buildFluxoNosPreview(fluxo)}`;
+}
+
+function buildFluxoNosPreview(fluxo){
+  const nos=fluxo.nos||[];if(!nos.length)return`<div class="info-box cyan">Nenhum nó criado. Edite o fluxo para adicionar nós.</div>`;
+  return`<div style="display:flex;flex-direction:column;gap:6px">${nos.map((n,i)=>{
+    const tipo=n.tipo==='diagnostico'?'DIAGNÓSTICO':'PERGUNTA';const cor=n.tipo==='diagnostico'?'var(--green2)':'var(--cyan2)';
+    return`<div style="background:var(--steel);border:1px solid rgba(255,255,255,.06);border-radius:var(--r2);padding:10px 13px;border-left:3px solid ${cor}">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:${n.tipo==='pergunta'?'6':'0'}px">
+        <span style="font-family:var(--font-mono);font-size:9px;background:rgba(0,0,0,.3);padding:2px 7px;border-radius:4px;color:${cor}">${tipo}</span>
+        <div style="font-family:var(--font-head);font-size:14px;color:var(--chrome2)">${esc(n.pergunta||n.titulo||'')}</div>
+      </div>
+      ${n.tipo==='pergunta'&&n.opcoes?.length?`<div style="display:flex;flex-direction:column;gap:3px">${n.opcoes.map(o=>`<div style="display:flex;align-items:center;gap:6px;padding:4px 8px;background:rgba(0,0,0,.2);border-radius:var(--r)"><span style="font-family:var(--font-mono);font-size:9px;color:var(--chrome);text-transform:uppercase;min-width:20px">${esc(o.label)}</span><span style="font-size:12px;color:var(--chrome)">→</span><span style="font-family:var(--font-mono);font-size:9px;color:var(--cyan2)">${o.destino==='diagnostico_direto'?'DIAGNÓSTICO':nos.find(x=>x.id===o.destinoId)?.pergunta||o.destinoId||'?'}</span></div>`).join('')}</div>`:''}
+    </div>`;
+  }).join('')}</div>`;
+}
+
+function buildFluxoExec(){
+  const fe=S.fluxoExec;if(!fe)return buildFluxos();
+  const fluxo=S.fluxos.find(f=>f.id===fe.fluxoId);if(!fluxo)return buildFluxos();
+  const nos=fluxo.nos||[];const noAtual=nos.find(n=>n.id===fe.noAtual);
+  if(!noAtual)return`<div class="empty"><div class="empty-icon">⚠</div><div class="empty-title">NÓ NÃO ENCONTRADO</div></div>`;
+  const breadcrumb=fe.historico.length?`<div class="fluxo-breadcrumb">${fe.historico.map(h=>`<div class="bc-item"><span>${esc((h.pergunta||'').slice(0,20))}</span><span class="bc-resp"> ${esc(h.resposta)}</span></div>`).join('')}</div>`:'';
+  
+  // HTML DA FOTO E ÁUDIO NA HORA DE EXECUTAR
+  const fotosExecHtml = (noAtual.fotos?.length) ? `<div class="exec-imgs" style="margin:12px 0">${noAtual.fotos.map((f,i)=>`<div class="exec-img" onclick="lightbox('${f}')"><img src="${f}"></div>`).join('')}</div>` : '';
+  const audioExecHtml = noAtual.audio ? `<div style="margin:12px 0; background:rgba(34,211,238,0.1); padding:10px; border-radius:var(--r); border-left:3px solid var(--cyan2);">
+    <div style="font-family:var(--font-mono);font-size:10px;color:var(--cyan2);text-transform:uppercase;margin-bottom:6px;">🎙 Instrução em Áudio</div>
+    <audio controls src="${noAtual.audio}" style="width:100%; height:40px;" onplay="tocarAudioLockScreen('${esc(noAtual.pergunta||noAtual.titulo)}')"></audio>
+  </div>` : '';
+
+  if(noAtual.tipo==='diagnostico'){
+    return`<div class="card" style="border-color:rgba(34,211,238,.15)">
+      <div class="card-head"><div class="card-title" style="color:var(--cyan2)">🔀 ${esc(fluxo.nome)}</div></div>
+      ${breadcrumb}
+    </div>
+    <div class="fluxo-diag-card">
+      <div style="font-family:var(--font-mono);font-size:10px;color:var(--cyan2);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">✅ DIAGNÓSTICO FINAL</div>
+      <div class="fluxo-diag-title">${esc(noAtual.titulo||noAtual.pergunta||'')}</div>
+      ${audioExecHtml}
+      ${fotosExecHtml}
+      ${noAtual.descricao?`<div class="fluxo-diag-desc">${esc(noAtual.descricao)}</div>`:''}
+      ${noAtual.solucao?`<div style="background:rgba(0,0,0,.3);border-radius:var(--r);padding:10px 12px;border-left:3px solid var(--cyan2);margin-top:4px"><div style="font-family:var(--font-mono);font-size:9px;color:var(--cyan2);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px">SOLUÇÃO RECOMENDADA</div><div style="font-size:13px;color:var(--chrome2);line-height:1.6">${esc(noAtual.solucao)}</div></div>`:''}
+      ${noAtual.procId?`<button class="btn yellow sm" onclick="A.iniciarExecDoFluxo(${noAtual.procId})">▶ EXECUTAR PROCEDIMENTO</button>`:''}
+    </div>
+    <div style="display:flex;gap:8px">
+      ${fe.historico.length?`<button class="btn steel sm" onclick="A.fluxoVoltar()">← VOLTAR</button>`:''}
+      <button class="btn ghost-cyan sm" onclick="A.fluxoReiniciar()">🔄 REINICIAR</button>
+      <button class="btn steel sm" onclick="A.sairFluxo()">✕ SAIR</button>
+    </div>`;
+  }
+  
+  // NÓ DE PERGUNTA
+  const opcoesHtml=(noAtual.opcoes||[]).map((o,i)=>`<button class="fluxo-opt-btn" onclick="A.fluxoResponder(${i})"><span style="font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.5px;min-width:20px;color:rgba(34,211,238,.5)">${String.fromCharCode(65+i)}</span> ${esc(o.label)}<span class="fluxo-opt-arrow">›</span></button>`).join('');
+  return`<div class="card" style="border-color:rgba(34,211,238,.15)">
+    <div class="card-head"><div class="card-title" style="color:var(--cyan2)">🔀 ${esc(fluxo.nome)}</div></div>
+    ${breadcrumb}
+  </div>
+  <div class="fluxo-node-card">
+    <div class="fluxo-node-head"><div class="fluxo-q-badge">PERGUNTA</div><div class="fluxo-question">${esc(noAtual.pergunta||noAtual.titulo||'')}</div></div>
+    <div style="padding: 0 16px;">
+       ${audioExecHtml}
+       ${fotosExecHtml}
+    </div>
+    ${noAtual.descricao?`<div class="fluxo-desc" style="padding-top:0">${esc(noAtual.descricao)}</div>`:''}
+    <div class="fluxo-opts">${opcoesHtml||'<div style="color:var(--chrome);font-size:13px">Sem opções</div>'}</div>
+  </div>
+  <div style="display:flex;gap:8px">
+    ${fe.historico.length?`<button class="btn steel sm" onclick="A.fluxoVoltar()">← VOLTAR</button>`:''}
+    <button class="btn ghost-cyan sm" onclick="A.fluxoReiniciar()">🔄 REINICIAR</button>
+    <button class="btn steel sm" onclick="A.sairFluxo()">✕ SAIR</button>
+  </div>`;
+}
+
+/* ══ ABA BIBLIOTECA ══ */
+function buildBiblioteca(){
+  const{items,total,pages}=bibPaginaItems();
+  const searchHtml=`<div class="bib-search"><span class="bib-search-icon">🔍</span><input type="text" class="bib-search-input" placeholder="Buscar passos na biblioteca…" value="${esc(S.bibBusca)}" oninput="A.bibBuscar(this.value)" id="bibSearchInput">${S.bibBusca?`<div class="search-clear" onclick="A.limparBusca('bib')">✕</div>`:''}</div>`;
+  const statsHtml=`<div style="display:flex;align-items:center;justify-content:space-between;padding:0 2px"><span style="font-family:var(--font-mono);font-size:10px;color:var(--chrome);text-transform:uppercase">${S.bibBusca?`${total} resultado${total!==1?'s':''}`:total+' passo'+(total!==1?'s':'')+' no total'}</span>${pages>1?`<span style="font-family:var(--font-mono);font-size:10px;color:#fb923c">Pág ${S.bibPagina+1}/${pages}</span>`:''}</div>`;
+  const itensHtml=items.length?`<div class="bib-card">${items.map(b=>{const fotos=b.fotos||[];return`<div class="bib-step-row" onclick="A.verBibItem(${b.id})">
+    ${fotos.length?`<div class="bib-step-thumb"><img src="${fotos[0]}" alt="" loading="lazy"></div>`:`<div class="bib-step-thumb-empty">📄</div>`}
+    <div class="bib-step-info"><div class="bib-step-title">${esc(b.titulo)}</div><div class="bib-step-meta">${b.categoria||'Geral'}${b.origem?' · '+b.origem:''} ${b.audio ? ' 🎙' : ''}</div></div>
+    <div class="bib-step-acts"><button class="bib-btn edit" onclick="event.stopPropagation();A.editarBibItem(${b.id})">✏</button><button class="bib-btn del" onclick="event.stopPropagation();A.deletarBibItem(${b.id})">✕</button></div>
+  </div>`;}).join('')}</div>`:
+  `<div style="text-align:center;padding:28px;color:var(--chrome);font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:1px">${S.bibBusca?'Nenhum resultado encontrado':'Biblioteca vazia — passos adicionados em procedimentos ou fluxos aparecem aqui'}</div>`;
+  const paginacaoHtml=pages>1?`<div class="bib-pages">${Array.from({length:pages},(_,i)=>`<button class="bib-page-btn${i===S.bibPagina?' on':''}" onclick="A.bibPagina(${i})">${i+1}</button>`).join('')}</div>`:'';
+  return`<div class="card" style="border-color:rgba(251,146,60,.1)">
+    <div class="card-head"><div class="card-title" style="color:#fb923c">📚 BIBLIOTECA DE PASSOS</div></div>
+    <div class="card-body"><div class="info-box orange">Todos os passos criados em procedimentos e fluxos ficam aqui. Use a busca para encontrar e reutilizar.</div></div>
+  </div>
+  ${searchHtml}${statsHtml}${itensHtml}${paginacaoHtml}
+  <button class="btn ghost-orange sm" onclick="A.novoBibItem()">＋ NOVO PASSO NA BIBLIOTECA</button>`;
+}
+
+/* ══ ABA HISTÓRICO ══ */
+async function buildHistorico(){
+  const body=document.getElementById('body');
+  body.innerHTML=`<div class="card"><div class="card-head"><div class="card-title">⏳ CARREGANDO...</div></div></div>`;
+  let execs=[],scores=[];
+  try{execs=await DB.getAll('execucoes');}catch{}
+  try{scores=await DB.getAll('treino_scores');}catch{}
+  execs.sort((a,b)=>b.ts-a.ts);scores.sort((a,b)=>b.ts-a.ts);
+  const totExec=execs.length,totOk=execs.filter(e=>e.concluido).length;const melhorTreino=scores.length?Math.max(...scores.map(s=>s.taxa)):0;
+  const execHtml=execs.length===0?`<div style="text-align:center;padding:14px;color:var(--chrome);font-family:var(--font-mono);font-size:10px;text-transform:uppercase">Nenhuma execução</div>`:execs.slice(0,20).map(e=>{const p=S.procedimentos.find(x=>x.id===e.procId);const cor=e.concluido?'var(--green2)':'#e74c3c';const mins=e.duracao?Math.round(e.duracao/60000)+'min':'-';return`<div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--steel2);border-radius:var(--r);border:1px solid rgba(255,255,255,.05)"><span style="font-size:18px">${e.concluido?'✅':'❌'}</span><div style="flex:1;min-width:0"><div style="font-family:var(--font-head);font-size:13px;color:${cor}">${p?.nome||'Deletado'}</div><div style="font-family:var(--font-mono);font-size:9px;color:var(--chrome)">${fmtDateFull(e.ts)} · ${mins}</div></div><span style="font-family:var(--font-mono);font-size:10px;color:var(--chrome)">${e.stepsConcluidos||0}/${e.stepsTotal||0}</span></div>`;}).join('');
+  const scoreHtml=scores.length===0?`<div style="text-align:center;padding:14px;color:var(--chrome);font-family:var(--font-mono);font-size:10px;text-transform:uppercase">Nenhum treino</div>`:scores.slice(0,20).map(s=>{const p=S.procedimentos.find(x=>x.id===s.procId);const cor=s.taxa>=80?'var(--green2)':s.taxa>=60?'var(--yellow)':'#e74c3c';return`<div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--steel2);border-radius:var(--r);border:1px solid rgba(168,85,247,.1)"><span style="font-size:18px">🎓</span><div style="flex:1;min-width:0"><div style="font-family:var(--font-head);font-size:13px;color:var(--chrome2)">${p?.nome||'Deletado'}</div><div style="font-family:var(--font-mono);font-size:9px;color:var(--chrome)">${fmtDateFull(s.ts)}</div></div><span style="font-family:var(--font-head);font-size:18px;color:${cor}">${s.taxa}%</span></div>`;}).join('');
+  body.innerHTML=`<div class="card"><div class="card-head"><div class="card-title">📊 RESUMO GERAL</div></div><div class="card-body"><div style="display:flex;gap:8px;flex-wrap:wrap">${[{v:totExec,l:'Execuções',c:'var(--yellow)'},{v:totOk,l:'Concluídas',c:'var(--green2)'},{v:scores.length,l:'Treinos',c:'#a855f7'},{v:melhorTreino+'%',l:'Melhor Treino',c:'var(--yellow)'}].map(s=>`<div style="flex:1;min-width:55px;background:var(--steel2);border-radius:var(--r);padding:9px;text-align:center;border:1px solid rgba(255,255,255,.05)"><div style="font-family:var(--font-head);font-size:24px;color:${s.c}">${s.v}</div><div style="font-family:var(--font-mono);font-size:8px;color:var(--chrome);text-transform:uppercase;letter-spacing:.5px;margin-top:2px">${s.l}</div></div>`).join('')}</div></div></div>
+  <div class="card"><div class="card-head"><div class="card-title">▶ EXECUÇÕES</div></div><div style="padding:7px 13px 13px;display:flex;flex-direction:column;gap:5px">${execHtml}</div></div>
+  <div class="card"><div class="card-head"><div class="card-title" style="color:#a855f7">🎓 TREINOS</div></div><div style="padding:7px 13px 13px;display:flex;flex-direction:column;gap:5px">${scoreHtml}</div></div>`;
+}
+
+/* ══ AÇÕES ══ */
+const A={
+  setTab(t){S.tab=t;S.viewProcId=null;S.viewFluxoId=null;S.fluxoExec=null;render();},
+  acaoPrincipal(){A.novoProcedimento();},
+  fecharProc(){S.viewProcId=null;S.tab='procedimentos';render();},
+  fecharFluxo(){S.viewFluxoId=null;S.tab='fluxo';render();},
+/* ── Buscas Globais ── */
+  limparBusca(tipo){
+    if(tipo==='bib'){ S.bibBusca=''; S.bibPagina=0; }
+    if(tipo==='proc'){ S.procBusca=''; }
+    if(tipo==='fluxo'){ S.fluxoBusca=''; }
+    render();
+  },
+  procBuscar(val){
+    S.procBusca=val; render();
+    setTimeout(()=>{const i=document.getElementById('procSearchInput');if(i){i.focus();i.setSelectionRange(i.value.length,i.value.length);}},10);
+  },
+  fluxoBuscar(val){
+    S.fluxoBusca=val; render();
+    setTimeout(()=>{const i=document.getElementById('fluxoSearchInput');if(i){i.focus();i.setSelectionRange(i.value.length,i.value.length);}},10);
+  },
+  /* ── Procedimentos ── */
+  novoProcedimento(){S.editandoProc=null;abrirModalProc(null);},
+  editarProc(id){const p=S.procedimentos.find(x=>x.id===id);if(!p)return;S.editandoProc=p;abrirModalProc(p);},
+  async salvarProc(){
+    const nome=document.getElementById('mNome')?.value?.trim();if(!nome){toast('⚠ Digite o nome!','');return;}
+    const p=S.editandoProc||{steps:[],criadoEm:Date.now()};
+    p.nome=nome;p.descricao=v('mDesc');p.categoria=v('mCat');p.veiculoModelo=v('mVeiculo');p.atualizadoEm=Date.now();
+    const id=await DB.put('procedimentos',p);if(!p.id)p.id=id;
+    if(!S.procedimentos.find(x=>x.id===p.id))S.procedimentos.push(p);
+    fecharModal();toast(S.editandoProc?'✅ Atualizado!':'✅ Criado!','ok');S.editandoProc=null;render();
+  },
+  async deletarProc(id){
+    if(!confirm('Excluir este procedimento e todos seus passos?'))return;
+    await DB.del('procedimentos',id);S.procedimentos=S.procedimentos.filter(p=>p.id!==id);
+    S.viewProcId=null;fecharModal();toast('🗑 Excluído.','error');render();
+  },
+  verProcedimento(id){S.viewProcId=id;S.tab='procedimentos';render();},
+
+  /* ── Steps ── */
+  novoStep(procId){S.editandoStep={procId,stepId:null};abrirModalStep(procId,null);},
+  editarStep(stepId,procId){const proc=S.procedimentos.find(p=>p.id===procId);const step=proc?.steps?.find(s=>s.id===stepId);if(!step)return;S.editandoStep={procId,stepId};abrirModalStep(procId,step);},
+  
+  async salvarStep(procId){
+    const titulo=v('sTitulo');if(!titulo){toast('⚠ Digite o título!','');return;}
+    const ordemVal=parseInt(document.getElementById('sOrdem')?.value)||1;
+    const proc=S.procedimentos.find(p=>p.id===procId);if(!proc)return;
+    const stepId=S.editandoStep?.stepId;let step=stepId?proc.steps.find(s=>s.id===stepId):null;
+    if(!step){step={id:'s'+Date.now()+Math.random().toString(36).slice(2),fotos:[]};proc.steps=proc.steps||[];proc.steps.push(step);}
+    
+    step.titulo=titulo;step.descricao=v('sDesc');step.alerta=v('sAlerta');step.ordem=ordemVal;
+    
+    // Salva as fotos se houver
+    if(window._stepFotosTemp!==undefined){step.fotos=window._stepFotosTemp;window._stepFotosTemp=undefined;}
+    
+    // NOVA PARTE: Salva o áudio no passo e limpa a memória temporária
+    if(window._stepAudioTemp!==undefined){
+        step.audio=window._stepAudioTemp;
+        window._stepAudioTemp=undefined;
+    }
+
+    proc.steps.forEach(s=>{if(s.id!==step.id&&s.ordem>=ordemVal)s.ordem++;});
+    proc.steps.sort((a,b)=>a.ordem-b.ordem);proc.steps.forEach((s,i)=>s.ordem=i+1);
+    proc.atualizadoEm=Date.now();await DB.put('procedimentos',proc);
+    
+    // Salva na biblioteca, agora mandando a linha "audio: step.audio"
+    await salvarNaBiblioteca({
+        titulo:step.titulo,
+        descricao:step.descricao,
+        categoria:proc.categoria||v('sCat')||'',
+        fotos:step.fotos||[],
+        audio:step.audio||null, // MANDANDO O ÁUDIO PRA BIBLIOTECA
+        alerta:step.alerta||'',
+        origem:'Procedimento',
+        origemId:proc.id+':'+step.id
+    });
+    
+    S.biblioteca=await DB.getAll('biblioteca');
+    fecharModal();toast('✅ Passo salvo! 📚 Adicionado à biblioteca.','ok');S.editandoStep=null;
+    document.getElementById('body').innerHTML=buildVerProcedimento(proc);document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  },
+
+  async deletarStep(stepId,procId){
+    if(!confirm('Remover este passo?'))return;
+    const proc=S.procedimentos.find(p=>p.id===procId);if(!proc)return;
+    proc.steps=proc.steps.filter(s=>s.id!==stepId);proc.steps.forEach((s,i)=>s.ordem=i+1);proc.atualizadoEm=Date.now();await DB.put('procedimentos',proc);
+    toast('🗑 Removido.','error');document.getElementById('body').innerHTML=buildVerProcedimento(proc);document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  },
+  async moverStep(stepId,procId,dir){
+    const proc=S.procedimentos.find(p=>p.id===procId);if(!proc)return;
+    const steps=proc.steps.slice().sort((a,b)=>a.ordem-b.ordem);const idx=steps.findIndex(s=>s.id===stepId);const ni=idx+dir;
+    if(ni<0||ni>=steps.length)return;const tmp=steps[idx].ordem;steps[idx].ordem=steps[ni].ordem;steps[ni].ordem=tmp;
+    proc.steps=steps.sort((a,b)=>a.ordem-b.ordem);proc.steps.forEach((s,i)=>s.ordem=i+1);proc.atualizadoEm=Date.now();await DB.put('procedimentos',proc);
+    document.getElementById('body').innerHTML=buildVerProcedimento(proc);document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  },
+
+  /* ── Execução ── */
+  iniciarExec(procId){
+    const proc=S.procedimentos.find(p=>p.id===procId);if(!proc||!proc.steps?.length){toast('⚠ Sem passos!','');return;}
+    const steps=proc.steps.slice().sort((a,b)=>a.ordem-b.ordem);
+    S.execAtiva={procId,stepsDone:[],stepAtual:steps[0]?.id||null,startTs:Date.now()};S.tab='executar';render();
+  },
+  iniciarExecDoFluxo(procId){S.fluxoExec=null;A.iniciarExec(procId);},
+  marcarStepDone(stepId){
+    if(!S.execAtiva)return;const proc=S.procedimentos.find(p=>p.id===S.execAtiva.procId);if(!proc)return;
+    const steps=proc.steps.slice().sort((a,b)=>a.ordem-b.ordem);const step=steps.find(s=>s.id===stepId);if(!step)return;
+    const done=new Set(S.execAtiva.stepsDone);const faltando=steps.filter(s=>s.ordem<step.ordem&&!done.has(s.id));
+    if(faltando.length>0){toast(`⛔ Faltam ${faltando.length} passo(s)!`,'error');return;}
+    S.execAtiva.stepsDone.push(stepId);const proximo=steps.find(s=>!S.execAtiva.stepsDone.includes(s.id));
+    S.execAtiva.stepAtual=proximo?.id||null;render();
+  },
+  async finalizarExec(concluido){
+    if(!S.execAtiva)return;const proc=S.procedimentos.find(p=>p.id===S.execAtiva.procId);
+    await DB.put('execucoes',{procId:S.execAtiva.procId,ts:Date.now(),concluido,duracao:Date.now()-S.execAtiva.startTs,stepsTotal:proc?.steps?.length||0,stepsConcluidos:S.execAtiva.stepsDone.length});
+    S.execAtiva=null;toast(concluido?'✅ Salvo no histórico!':'','ok');render();
+  },
+  confirmarAbandonar(){if(!confirm('Abandonar a execução?'))return;S.execAtiva=null;render();},
+
+  /* ── Treino ── */
+  iniciarTreino(procId){
+    const proc=S.procedimentos.find(p=>p.id===procId);if(!proc||!proc.steps?.length){toast('⚠ Sem passos!','');return;}
+    const steps=proc.steps.slice().sort((a,b)=>a.ordem-b.ordem);
+    const embaralhados=[...steps];for(let i=embaralhados.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[embaralhados[i],embaralhados[j]]=[embaralhados[j],embaralhados[i]];}
+    S.treino={procId,steps:embaralhados,respostas:[],stepAtual:0,feedbacks:[],finalizado:false,acertos:0,erros:0};S.tab='treino';render();
+  },
+  treinoClicarStep(stepId){
+    const tr=S.treino;if(tr.finalizado)return;const proc=S.procedimentos.find(p=>p.id===tr.procId);if(!proc)return;
+    const stepsOrdenados=proc.steps.slice().sort((a,b)=>a.ordem-b.ordem);const step=tr.steps.find(s=>s.id===stepId);if(!step)return;
+    const posicaoTentando=tr.respostas.length+1;const ordemCorreta=step.ordem;const correto=(ordemCorreta===posicaoTentando);
+    const respondidosIds=new Set(tr.respostas.map(r=>r.stepId));const faltavam=stepsOrdenados.filter(s=>s.ordem<ordemCorreta&&!respondidosIds.has(s.id));
+    const resp={stepId,titulo:step.titulo,ordemDada:posicaoTentando,ordemCorreta,correto,faltavam};tr.respostas.push(resp);
+    if(correto)tr.acertos++;else tr.erros++;
+    if(tr.respostas.length>=tr.steps.length){tr.finalizado=true;const taxa=Math.round((tr.acertos/tr.steps.length)*100);DB.put('treino_scores',{procId:tr.procId,ts:Date.now(),acertos:tr.acertos,erros:tr.erros,total:tr.steps.length,taxa}).catch(()=>{});}
+    render();
+  },
+  treinoDesfazer(){const tr=S.treino;if(!tr.respostas.length)return;const ultima=tr.respostas[tr.respostas.length-1];tr.respostas.pop();if(ultima.correto)tr.acertos=Math.max(0,tr.acertos-1);else tr.erros=Math.max(0,tr.erros-1);tr.finalizado=false;render();},
+  abandonarTreino(){S.treino={procId:null,steps:[],respostas:[],stepAtual:0,feedbacks:[],finalizado:false,acertos:0,erros:0};S.tab='treino';render();},
+
+  /* ── FLUXO ── */
+  novoFluxo(){S.editandoFluxo=null;abrirModalFluxo(null);},
+  editarFluxo(id){const f=S.fluxos.find(x=>x.id===id);if(!f)return;S.editandoFluxo=f;abrirModalFluxo(f);},
+  async salvarFluxo(){
+    const nome=v('fNome');if(!nome){toast('⚠ Digite o nome!','');return;}
+    const f=S.editandoFluxo||{nos:[],criadoEm:Date.now()};
+    f.nome=nome;f.descricao=v('fDesc');f.categoria=v('fCat');f.atualizadoEm=Date.now();
+    if(!f.noRaizId&&f.nos?.length)f.noRaizId=f.nos[0]?.id;
+    const id=await DB.put('fluxos',f);if(!f.id)f.id=id;
+    if(!S.fluxos.find(x=>x.id===f.id))S.fluxos.push(f);
+    fecharModal();toast(S.editandoFluxo?'✅ Fluxo atualizado!':'✅ Fluxo criado!','cyan');S.editandoFluxo=null;
+    if(S.viewFluxoId){document.getElementById('body').innerHTML=buildVerFluxo(f);document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));}else render();
+  },
+  async deletarFluxo(id){
+    if(!confirm('Excluir este fluxo?'))return;await DB.del('fluxos',id);S.fluxos=S.fluxos.filter(f=>f.id!==id);
+    S.viewFluxoId=null;fecharModal();toast('🗑 Fluxo excluído.','error');render();
+  },
+  verFluxo(id){S.viewFluxoId=id;S.tab='fluxo';render();},
+  iniciarFluxo(fluxoId){
+    const fluxo=S.fluxos.find(f=>f.id===fluxoId);if(!fluxo||!fluxo.nos?.length){toast('⚠ Fluxo sem nós!','');return;}
+    const noRaiz=fluxo.nos.find(n=>n.id===fluxo.noRaizId)||fluxo.nos[0];
+    S.fluxoExec={fluxoId,historico:[],noAtual:noRaiz.id};S.tab='fluxo';render();
+  },
+  fluxoResponder(opcaoIdx){
+    if(!S.fluxoExec)return;const fluxo=S.fluxos.find(f=>f.id===S.fluxoExec.fluxoId);if(!fluxo)return;
+    const nos=fluxo.nos||[];const noAtual=nos.find(n=>n.id===S.fluxoExec.noAtual);if(!noAtual)return;
+    const opcao=noAtual.opcoes?.[opcaoIdx];if(!opcao)return;
+    S.fluxoExec.historico.push({noId:noAtual.id,pergunta:noAtual.pergunta||noAtual.titulo||'',resposta:opcao.label,opcaoIdx});
+    if(opcao.destino==='diagnostico_direto'||!opcao.destinoId){
+      // Criar nó de diagnóstico inline se não existe
+      const diagId='diag_'+opcaoIdx+'_'+noAtual.id;const diagExist=nos.find(n=>n.id===diagId);
+      if(!diagExist){nos.push({id:diagId,tipo:'diagnostico',titulo:opcao.diagnostico||'Diagnóstico',descricao:opcao.descricaoFinal||'',solucao:opcao.solucao||'',procId:opcao.procId||null});}
+      S.fluxoExec.noAtual=diagId;
+    }else{S.fluxoExec.noAtual=opcao.destinoId;}
+    render();
+  },
+  fluxoVoltar(){
+    if(!S.fluxoExec||!S.fluxoExec.historico.length)return;
+    const anterior=S.fluxoExec.historico.pop();S.fluxoExec.noAtual=anterior.noId;render();
+  },
+  fluxoReiniciar(){
+    if(!S.fluxoExec)return;const fluxo=S.fluxos.find(f=>f.id===S.fluxoExec.fluxoId);if(!fluxo)return;
+    const noRaiz=fluxo.nos.find(n=>n.id===fluxo.noRaizId)||fluxo.nos[0];
+    S.fluxoExec={fluxoId:S.fluxoExec.fluxoId,historico:[],noAtual:noRaiz.id};render();
+  },
+  sairFluxo(){S.fluxoExec=null;if(S.viewFluxoId){const f=S.fluxos.find(x=>x.id===S.viewFluxoId);if(f){document.getElementById('body').innerHTML=buildVerFluxo(f);document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));return;}}S.tab='fluxo';render();},
+
+  /* ── BIBLIOTECA ── */
+  /* ── BIBLIOTECA ── */
+  bibBuscar(val){
+    S.bibBusca = val;
+    S.bibPagina = 0;
+    render(); // Redesenha a tela
+    
+    // MÁGICA DO FOCO: Devolve o cursor para a caixa de pesquisa instantaneamente
+    setTimeout(() => {
+      const input = document.getElementById('bibSearchInput');
+      if (input) {
+        input.focus(); // Clica na caixa de novo
+        // Garante que o cursor de digitação fique no final da palavra
+        const tamanho = input.value.length;
+        input.setSelectionRange(tamanho, tamanho);
+      }
+    }, 10);
+  },
+  bibPagina(p){S.bibPagina=p;render();},
+  novoBibItem(){abrirModalBibItem(null);},
+  editarBibItem(id){const b=S.biblioteca.find(x=>x.id===id);if(!b)return;abrirModalBibItem(b);},
+  verBibItem(id){const b=S.biblioteca.find(x=>x.id===id);if(!b)return;abrirModalVerBibItem(b);},
+  
+  async salvarBibItem(){
+    const titulo=v('bTitulo');if(!titulo){toast('⚠ Digite o título!','');return;}
+    const editId=window._editandoBibId;
+    let b=editId?S.biblioteca.find(x=>x.id===editId):null;
+    
+    // Monta o item novo, incluindo a foto e o áudio
+    const novoItem={
+        titulo,
+        descricao:v('bDesc'),
+        categoria:v('bCat'),
+        alerta:v('bAlerta'),
+        fotos:window._bibFotosTemp||[],
+        // Se gravou um áudio agora, usa ele. Se não, tenta manter o áudio antigo (se existia)
+        audio: window._bibAudioTemp !== undefined ? window._bibAudioTemp : (b?.audio || null), 
+        origem:b?.origem||'Manual',
+        origemId:b?.origemId||'manual_'+Date.now(),
+        criadoEm:b?.criadoEm||Date.now()
+    };
+
+    if(b){Object.assign(b,novoItem);await DB.put('biblioteca',b);}
+    else{const id=await DB.put('biblioteca',novoItem);novoItem.id=id;S.biblioteca.push(novoItem);}
+    
+    // Limpando a memória depois de salvar
+    window._editandoBibId=null;
+    window._bibFotosTemp=undefined;
+    window._bibAudioTemp=undefined; // LIMPA O ÁUDIO DA MEMÓRIA
+    
+    fecharModal();toast('✅ Passo salvo na biblioteca!','orange');render();
+  },
+
+  async deletarBibItem(id){
+    if(!confirm('Remover este passo da biblioteca?'))return;
+    await DB.del('biblioteca',id);S.biblioteca=S.biblioteca.filter(b=>b.id!==id);toast('🗑 Removido.','error');render();
+  },
+
+  /* ── Export/Import ── */
+  abrirExportImport(){abrirModalExportImport();},
+};
+
+/* ══ MODAL FLUXO ══ */
+
+
+function buildNosEditor(nos,fluxo){
+  if(!nos.length)return`<div style="text-align:center;padding:12px;color:var(--chrome);font-family:var(--font-mono);font-size:10px;text-transform:uppercase">Nenhum nó ainda</div>`;
+  return nos.map((n,i)=>buildNoEditorCard(n,i,nos)).join('');
+}
+
+
+window._nosEditor=[];
+window.adicionarNoEditor=()=>{
+  const novoId='n'+Date.now();
+  window._nosEditor.push({id:novoId,tipo:'pergunta',pergunta:'',opcoes:[]});
+  const container=document.getElementById('nosEditorContainer');if(!container)return;
+  const div=document.createElement('div');
+  div.innerHTML=buildNoEditorCard(window._nosEditor[window._nosEditor.length-1],window._nosEditor.length-1,window._nosEditor);
+  container.appendChild(div.firstElementChild);
+};
+window.removerNoEditor=(noId)=>{
+  window._nosEditor=window._nosEditor.filter(n=>n.id!==noId);
+  document.getElementById('noeditor_'+noId)?.remove();
+};
+
+window.trocarTipoNo=(noId,tipo)=>{
+  const no=window._nosEditor.find(n=>n.id===noId);if(!no)return;no.tipo=tipo;
+  const container=document.getElementById('nosEditorContainer');if(!container)return;
+  const el=document.getElementById('noeditor_'+noId);if(!el)return;
+  // Salvar título atual antes de rerender
+  const tituloEl=document.getElementById('no_titulo_'+noId);if(tituloEl)no.pergunta=no.titulo=tituloEl.value;
+  const newDiv=document.createElement('div');newDiv.innerHTML=buildNoEditorCard(no,window._nosEditor.indexOf(no),window._nosEditor);
+  el.replaceWith(newDiv.firstElementChild);
+};
+
+window.adicionarOpcaoEditor=(noId)=>{
+  const no=window._nosEditor.find(n=>n.id===noId);if(!no)return;
+  if(!no.opcoes)no.opcoes=[];no.opcoes.push({label:'',destinoId:'',destino:''});
+  const optsContainer=document.getElementById('no_opts_'+noId);if(!optsContainer)return;
+  const oi=no.opcoes.length-1;const o=no.opcoes[oi];const outrosNos=window._nosEditor.filter(x=>x.id!==noId);
+  
+  const rowDiv=document.createElement('div');
+  rowDiv.className='opt-editor-row';
+  rowDiv.id=`optrow_${noId}_${oi}`;
+  rowDiv.style.cssText = "flex-direction:column; align-items:stretch; gap:6px; background:rgba(0,0,0,.15); border-radius:4px; margin-bottom:4px;";
+  
+  rowDiv.innerHTML=`
+    <div style="display:flex;align-items:center;gap:8px">
+      <span class="opt-label">${String.fromCharCode(65+oi)}</span>
+      <input class="opt-input" id="opt_label_${noId}_${oi}" value="" placeholder="Texto da opção…">
+      <select class="opt-dest-sel" id="opt_dest_${noId}_${oi}"><option value="">Destino…</option>${outrosNos.map(x=>`<option value="${x.id}">${x.tipo==='diagnostico'?'✓ ':''}${esc((x.pergunta||x.titulo||'').slice(0,20))}</option>`).join('')}<option value="diagnostico_direto">✓ Diagnóstico final</option></select>
+      <button onclick="removerOpcaoEditor('${noId}',${oi})" style="background:rgba(192,57,43,.15);color:#e74c3c;border:1px solid rgba(192,57,43,.2);border-radius:4px;padding:4px 7px;cursor:pointer;font-size:11px">✕</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;padding-left:36px">
+       <span style="font-size:12px;opacity:0.5">🔍</span>
+       <input type="text" placeholder="Importar da biblioteca para esta opção..." oninput="filtrarBibModal(this.value, 'fluxo_opt', '${noId}_${oi}')" style="flex:1; background:transparent; border:none; border-bottom:1px solid rgba(255,255,255,.1); color:var(--cyan2); font-size:11px; padding:4px 0; outline:none;">
+    </div>
+    <div id="bibResults_${noId}_${oi}" style="padding-left:36px; display:flex; flex-direction:column; gap:2px;"></div>
+  `;
+  optsContainer.appendChild(rowDiv);
+};
+
+window.salvarFluxoComNos = async () => {
+  const nome=v('fNome');if(!nome){toast('⚠ Digite o nome do fluxo!','');return;}
+  const nosColetados = [];
+  
+  for(const no of window._nosEditor) {
+    const tituloEl=document.getElementById('no_titulo_'+no.id);
+    let titulo=tituloEl?.value?.trim()||'';
+    const tipo=document.getElementById('no_tipo_'+no.id)?.value||'pergunta';
+    
+    if(!titulo) titulo = tipo === 'diagnostico' ? 'Diagnóstico' : 'Pergunta';
+
+    const fotosDoNo = no.fotos || []; 
+    // PEGA O ÁUDIO DO NÓ (Se você gravou ou importou, ele estará aqui)
+    const audioDoNo = no.audio || null; 
+    
+    if(tipo==='diagnostico'){
+      const desc=document.getElementById('no_desc_'+no.id)?.value?.trim()||'';
+      const pEl = document.getElementById('no_proc_'+no.id);
+      const procId = pEl && pEl.value ? parseInt(pEl.value) : null;
+      
+      // SALVA O DIAGNÓSTICO NA BIBLIOTECA (Agora mandando o áudio junto)
+      await salvarNaBiblioteca({
+        titulo,
+        descricao:desc,
+        categoria:'Diagnóstico',
+        fotos:fotosDoNo,
+        audio:audioDoNo, // <--- GARANTE QUE O ÁUDIO VÁ PARA A BIBLIOTECA
+        alerta:'',
+        origem:'Fluxo',
+        origemId:'fluxo_diag_'+no.id
+      });
+
+      nosColetados.push({
+        id:no.id,
+        tipo:'diagnostico',
+        titulo,
+        pergunta:titulo,
+        descricao:desc,
+        solucao:desc,
+        procId:procId, 
+        fotos: fotosDoNo,
+        audio: audioDoNo // <--- GUARDA O ÁUDIO DENTRO DO FLUXO
+      });
+    } else {
+      const opcoes = [];
+      for(let oi=0; oi<(no.opcoes||[]).length; oi++){
+        const label=document.getElementById(`opt_label_${no.id}_${oi}`)?.value?.trim()||'';
+        const destSel=document.getElementById(`opt_dest_${no.id}_${oi}`);
+        const destVal=destSel?.value||'';
+        
+        if(label) {
+          await salvarNaBiblioteca({titulo:label,descricao:'',categoria:'Opção de Fluxo',fotos:[],alerta:'',origem:'Fluxo',origemId:'fluxo_opt_'+no.id+'_'+oi});
+          opcoes.push({label,destinoId:destVal==='diagnostico_direto'?null:destVal,destino:destVal==='diagnostico_direto'?'diagnostico_direto':''});
+        }
+      }
+      
+      // SALVA A PERGUNTA NA BIBLIOTECA (Agora mandando o áudio junto)
+      await salvarNaBiblioteca({
+        titulo,
+        descricao:'',
+        categoria:'Pergunta de Fluxo',
+        fotos:fotosDoNo,
+        audio:audioDoNo, // <--- GARANTE QUE O ÁUDIO VÁ PARA A BIBLIOTECA
+        alerta:'',
+        origem:'Fluxo',
+        origemId:'fluxo_q_'+no.id
+      });
+
+      nosColetados.push({
+        id:no.id,
+        tipo:'pergunta',
+        pergunta:titulo,
+        titulo,
+        opcoes, 
+        fotos: fotosDoNo,
+        audio: audioDoNo // <--- GUARDA O ÁUDIO DENTRO DO FLUXO
+      });
+    }
+  }
+
+  S.biblioteca = await DB.getAll('biblioteca');
+  const f=S.editandoFluxo||{criadoEm:Date.now()};
+  f.nome=nome; f.descricao=v('fDesc'); f.categoria=v('fCat');
+  f.nos=nosColetados; f.noRaizId=nosColetados[0]?.id||null; f.atualizadoEm=Date.now();
+  
+  await DB.put('fluxos',f);
+  const fluxosAtualizados = await DB.getAll('fluxos');
+  S.fluxos = fluxosAtualizados;
+  
+  fecharModal(); S.viewFluxoId=f.id; toast('✅ Fluxo e Áudios salvos!','cyan'); S.editandoFluxo=null;
+  document.getElementById('body').innerHTML=buildVerFluxo(f); document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+};
+
+/* ══ MODAL BIBLIOTECA ══ */
+function abrirModalBibItem(item){
+  fecharModal();
+  window._editandoBibId = item?.id || null;
+  window._bibFotosTemp = item ? [...(item.fotos || [])] : [];
+  window._bibAudioTemp = item?.audio || null;
+
+  const bg=document.createElement('div');bg.className='modal-bg';bg.onclick=e=>{if(e.target===bg)fecharModal();};
+  
+  bg.innerHTML=`<div class="modal orange-top" style="max-height:95vh">
+    <div class="modal-handle"></div>
+    <h2>${item?'✏ EDITAR':'＋ NOVO'} ITEM DA BIBLIOTECA</h2>
+    
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div><div class="label">Título / Pergunta *</div><input type="text" id="bTitulo" class="input" value="${esc(item?.titulo||'')}" placeholder="Ex: Pressão dos Pneus…"></div>
+      <div><div class="label">Descrição / Solução</div><textarea id="bDesc" class="textarea" style="min-height:80px" placeholder="Detalhes…">${esc(item?.descricao||'')}</textarea></div>
+      
+      <div style="display:flex;gap:10px">
+        <div style="flex:1"><div class="label">Categoria</div><input type="text" id="bCat" class="input" value="${esc(item?.categoria||'')}" placeholder="Motor, Suspensão…"></div>
+        <div style="flex:1"><div class="label">Alerta</div><input type="text" id="bAlerta" class="input" value="${esc(item?.alerta||'')}" placeholder="⚠ Cuidado com…"></div>
+      </div>
+
+      <div style="display:flex;gap:6px">
+        <div style="flex:1">
+          <div class="label" style="font-size:10px">📷 FOTOS</div>
+          <div class="photo-drop" onclick="document.getElementById('bibPhotoInput').click()">
+            <div style="font-size:20px;opacity:.6">📷</div>
+          </div>
+          <input type="file" id="bibPhotoInput" accept="image/*" multiple style="display:none" onchange="adicionarFotosBib(event)">
+        </div>
+        
+        <div style="flex:1">
+          <div class="label" style="font-size:10px; color:var(--cyan2)">🎙 PC / NATIVO</div>
+          <div id="btnGravar_bib" class="photo-drop" style="border-color:rgba(34,211,238,.3); background:rgba(34,211,238,.02)" onclick="toggleGravacaoNativa('bib')">
+            <div style="font-size:20px;opacity:.6">🎙</div>
+          </div>
+        </div>
+
+        <div style="flex:1">
+          <div class="label" style="font-size:10px; color:var(--yellow)">📱 CELULAR</div>
+          <div class="photo-drop" style="border-color:rgba(245,200,0,.3); background:rgba(245,200,0,.02)" onclick="document.getElementById('bibAudioInput').click()">
+            <div style="font-size:20px;opacity:.6">📱</div>
+          </div>
+          <input type="file" id="bibAudioInput" accept="audio/*" capture="microphone" style="display:none" onchange="adicionarAudioTemp(event, 'bib')">
+        </div>
+      </div>
+
+      <div id="bibAudioPreview"></div>
+      <div id="bibPhotoPreviews" class="photo-previews"></div>
+    </div>
+
+    <div style="display:flex;gap:8px;margin-top:14px">
+      ${item?`<button class="btn red sm" onclick="A.deletarBibItem(${item.id})">🗑</button>`:''}
+      <button class="btn steel sm" onclick="fecharModal()">Cancelar</button>
+      <button class="btn orange sm" onclick="A.salvarBibItem()" style="flex:2">💾 SALVAR NA BIBLIOTECA</button>
+    </div>
+  </div>`;
+  document.body.appendChild(bg);
+  renderFotosBibPreviews();
+  renderAudioPreview('bib');
+}
+
+function abrirModalVerBibItem(item){
+  fecharModal();
+  const bg=document.createElement('div');bg.className='modal-bg';bg.onclick=e=>{if(e.target===bg)fecharModal();};
+  const fotosHtml=item.fotos?.length?`<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px">${item.fotos.map((f,i)=>`<div style="width:90px;height:72px;border-radius:var(--r);overflow:hidden;border:1px solid rgba(255,255,255,.1);cursor:pointer" onclick="lightbox('${f}')"><img src="${f}" alt="${i+1}" style="width:100%;height:100%;object-fit:cover"></div>`).join('')}</div>`:'';
+  
+  // Player de áudio para a visualização da biblioteca
+  const audioHtml = item.audio ? `<div style="margin:12px 0; background:rgba(251,146,60,0.1); padding:10px; border-radius:var(--r); border-left:3px solid #fb923c;">
+    <div style="font-family:var(--font-mono);font-size:10px;color:#fb923c;text-transform:uppercase;margin-bottom:6px;">🎙 Áudio Gravado</div>
+    <audio controls src="${item.audio}" style="width:100%; height:40px;"></audio>
+  </div>` : '';
+
+  bg.innerHTML=`<div class="modal orange-top">
+    <div class="modal-handle"></div>
+    <h2 style="color:#fb923c">${esc(item.titulo)}</h2>
+    ${audioHtml}
+    ${item.descricao?`<div style="font-size:13px;color:var(--chrome2);line-height:1.7">${esc(item.descricao)}</div>`:''}
+    ${item.alerta?`<div class="warn-box">⚠ ${esc(item.alerta)}</div>`:''}
+    ${fotosHtml}
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px">
+      ${item.categoria?`<span class="proc-badge pb-orange">${esc(item.categoria)}</span>`:''}
+      ${item.origem?`<span class="proc-badge pb-gray">${esc(item.origem)}</span>`:''}
+    </div>
+    <div style="display:flex;gap:8px;margin-top:15px">
+      <button class="btn steel sm" onclick="fecharModal()">Fechar</button>
+      <button class="btn orange-btn sm" onclick="fecharModal();A.editarBibItem(${item.id})">✏ Editar</button>
+    </div>
+  </div>`;
+  document.body.appendChild(bg);
+}
+
+function renderBibFotosPreviews(){
+  const el=document.getElementById('bibPhotoPreviews');if(!el)return;
+  el.innerHTML=(window._bibFotosTemp||[]).map((f,i)=>`<div class="photo-thumb"><img src="${f}" alt="${i+1}"><div class="photo-del" onclick="removerBibFoto(${i})">✕</div></div>`).join('');
+}
+window.removerBibFoto=idx=>{if(window._bibFotosTemp)window._bibFotosTemp.splice(idx,1);renderBibFotosPreviews();};
+window.adicionarBibFotos=async e=>{
+  const files=Array.from(e.target.files||[]);if(!files.length)return;if(!window._bibFotosTemp)window._bibFotosTemp=[];
+  for(const f of files){window._bibFotosTemp.push(await comprimirImagem(f));}
+  renderBibFotosPreviews();e.target.value='';
+};
+
+/* ══ MODAL PROC / STEP ══ */
+function abrirModalProc(proc){
+  fecharModal();
+  const bg=document.createElement('div');bg.className='modal-bg';bg.onclick=e=>{if(e.target===bg)fecharModal();};
+  bg.innerHTML=`<div class="modal">
+    <div class="modal-handle"></div>
+    <h2>${proc?'✏ EDITAR':'＋ NOVO'} PROCEDIMENTO</h2>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div><div class="label">Nome *</div><input type="text" id="mNome" class="input" value="${esc(proc?.nome||'')}" placeholder="Ex: Troca de óleo…" maxlength="80"></div>
+      <div><div class="label">Descrição</div><textarea id="mDesc" class="textarea" placeholder="Descreva…" maxlength="500">${esc(proc?.descricao||'')}</textarea></div>
+      <div style="display:flex;gap:8px">
+        <div style="flex:1"><div class="label">Categoria</div><input type="text" id="mCat" class="input" value="${esc(proc?.categoria||'')}" placeholder="Motor, Freios…"></div>
+        <div style="flex:1"><div class="label">Veículo</div><input type="text" id="mVeiculo" class="input" value="${esc(proc?.veiculoModelo||'')}" placeholder="Corolla 2020…"></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:4px">
+      ${proc?`<button class="btn red sm" onclick="A.deletarProc(${proc.id})">🗑</button>`:''}
+      <button class="btn steel sm" onclick="fecharModal()">Cancelar</button>
+      <button class="btn yellow sm" onclick="A.salvarProc()" style="flex:2">💾 SALVAR</button>
+    </div>
+  </div>`;
+  document.body.appendChild(bg);setTimeout(()=>document.getElementById('mNome')?.focus(),120);
+}
+
+function abrirModalStep(procId,step){
+  fecharModal();
+  const proc=S.procedimentos.find(p=>p.id===procId);const steps=proc?.steps||[];
+  const maxOrdem=steps.length+(step?0:1);const ordemSugerida=step?.ordem||maxOrdem;
+  window._stepFotosTemp=step?[...(step.fotos||[])]:[];
+  window._stepAudioTemp=step?.audio||null; // Carrega o áudio se existir
+  const bg=document.createElement('div');bg.className='modal-bg';bg.onclick=e=>{if(e.target===bg){window._stepFotosTemp=undefined; window._stepAudioTemp=undefined; fecharModal();}};
+
+  bg.innerHTML=`<div class="modal" style="max-height:95vh">
+    <div class="modal-handle"></div>
+    <h2>${step?'✏ EDITAR':'＋ NOVO'} PASSO</h2>
+
+    <div style="background:var(--steel2);padding:10px;border-radius:var(--r);margin-bottom:10px;border:1px solid rgba(251,146,60,.3)">
+      <div class="label" style="color:#fb923c">🔍 IMPORTAR DA BIBLIOTECA</div>
+      <input type="text" class="input" placeholder="Buscar passos na biblioteca..." oninput="filtrarBibModal(this.value, 'proc', null)">
+      <div id="bibResults_proc" style="display:flex;flex-direction:column;gap:4px;margin-top:6px;max-height:120px;overflow-y:auto"></div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;gap:10px;align-items:flex-start">
+        <div><div class="label">Ordem</div><input type="number" id="sOrdem" class="order-input" value="${ordemSugerida}" min="1" max="${maxOrdem+10}"></div>
+        <div style="flex:1"><div class="label">Título *</div><input type="text" id="sTitulo" class="input" value="${esc(step?.titulo||'')}" placeholder="Ex: Drenar o óleo…" maxlength="100"></div>
+      </div>
+      <div><div class="label">Descrição</div><textarea id="sDesc" class="textarea" placeholder="Instruções detalhadas…" maxlength="1000">${esc(step?.descricao||'')}</textarea></div>
+      
+      <div style="display:flex;gap:6px">
+        <div style="flex:1">
+          <div class="label" style="font-size:10px">📷 FOTOS</div>
+          <div class="photo-drop" onclick="document.getElementById('photoFileInput').click()">
+            <div style="font-size:20px;opacity:.6">📷</div>
+          </div>
+          <input type="file" id="photoFileInput" accept="image/*" multiple capture="environment" style="display:none" onchange="adicionarFotos(event)">
+        </div>
+        
+        <div style="flex:1">
+          <div class="label" style="font-size:10px; color:var(--cyan2)">🎙 GRAVAR AQUI</div>
+          <div id="btnGravar_step" class="photo-drop" style="border-color:rgba(34,211,238,.3); background:rgba(34,211,238,.02); transition:all 0.3s;" onclick="toggleGravacaoNativa('step')">
+            <div style="font-size:20px;opacity:.6">🎙</div>
+          </div>
+        </div>
+
+        <div style="flex:1">
+          <div class="label" style="font-size:10px; color:var(--yellow)">📱 APP CELULAR</div>
+          <div class="photo-drop" style="border-color:rgba(245,200,0,.3); background:rgba(245,200,0,.02)" onclick="document.getElementById('audioFileInput').click()">
+            <div style="font-size:20px;opacity:.6">📱</div>
+          </div>
+          <input type="file" id="audioFileInput" accept="audio/*" capture="microphone" style="display:none" onchange="adicionarAudioTemp(event, 'step')">
+        </div>
+      </div>
+      
+      <div id="stepAudioPreview"></div>
+      <div class="photo-previews" id="photoPreviews"></div>
+      
+      <div><div class="label" style="margin-top:4px">⚠ Alerta de Segurança</div><input type="text" id="sAlerta" class="input" value="${esc(step?.alerta||'')}" placeholder="Cuidado com temperatura…" maxlength="200"></div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:14px">
+      <button class="btn steel sm" onclick="window._stepFotosTemp=undefined; window._stepAudioTemp=undefined; fecharModal()">Cancelar</button>
+      <button class="btn yellow sm" onclick="A.salvarStep(${procId})" style="flex:2">💾 SALVAR PASSO</button>
+    </div>
+  </div>`;
+  document.body.appendChild(bg);
+  renderFotosPreviews();
+  renderAudioPreview('step'); // Mostra o áudio se já existir
+  setTimeout(()=>document.getElementById('sTitulo')?.focus(),120);
+}
+
+window.filtrarBibModal = (busca, tipo, refId) => {
+  const resId = tipo === 'proc' ? 'bibResults_proc' : 'bibResults_' + refId;
+  const res = document.getElementById(resId);
+  if(!res) return;
+  if(!busca || busca.length < 2) { res.innerHTML = ''; return; }
+
+  const q = busca.toLowerCase().trim();
+  const itens = S.biblioteca.filter(b => (b.titulo||'').toLowerCase().includes(q)).slice(0, 5);
+
+  if(itens.length === 0) { res.innerHTML = '<div style="font-size:12px;color:var(--chrome);padding:4px 0;">Nenhum encontrado.</div>'; return; }
+
+  res.innerHTML = itens.map(b => {
+    // Se tiver foto, cria a miniatura
+    const thumb = b.fotos && b.fotos.length ? `<img src="${b.fotos[0]}" style="width:28px;height:28px;object-fit:cover;border-radius:4px;flex-shrink:0;border:1px solid rgba(255,255,255,.1)">` : `<div style="width:28px;height:28px;background:rgba(0,0,0,.2);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:12px;opacity:.5">📄</div>`;
+    
+    return `<div style="padding:6px 8px;background:var(--steel3);margin-top:4px;border-radius:4px;cursor:pointer;font-size:12px;border-left:3px solid ${tipo==='proc'?'var(--yellow)':'var(--cyan2)'};display:flex;align-items:center;gap:8px" onclick="usarBib('${b.id}', '${tipo}', '${refId||''}')">
+      ${thumb}
+      <div style="display:flex;flex-direction:column;overflow:hidden"><span style="color:var(--chrome2);white-space:nowrap;text-overflow:ellipsis;overflow:hidden">${esc(b.titulo)}</span><span style="font-size:9px;color:var(--chrome);margin-top:1px">${esc(b.categoria||'Geral')}</span></div>
+    </div>`;
+  }).join('');
+};
+
+window.usarBib = (id, tipo, refId) => {
+  const item = S.biblioteca.find(b => b.id === parseInt(id));
+  if(!item) return;
+
+  if(tipo === 'proc') {
+    const tEl=document.getElementById('sTitulo');if(tEl)tEl.value=item.titulo||'';
+    const dEl=document.getElementById('sDesc');if(dEl)dEl.value=item.descricao||'';
+    const aEl=document.getElementById('sAlerta');if(aEl)aEl.value=item.alerta||'';
+    
+    // IMPORTA FOTOS
+    if(item.fotos?.length){ window._stepFotosTemp=[...item.fotos]; renderFotosPreviews(); }
+    
+    // IMPORTA O ÁUDIO JUNTO!
+    if(item.audio){ window._stepAudioTemp = item.audio; renderAudioPreview('step'); }
+    
+    document.getElementById('bibResults_proc').innerHTML = ''; 
+    document.querySelector('#bibResults_proc').previousElementSibling.value = ''; 
+    toast('✅ Importado com Fotos e Áudio!', 'orange');
+    
+  } else if(tipo === 'fluxo') {
+    window.sincronizarDOMParaMemoria();
+    const no = window._nosEditor.find(n => n.id === refId);
+    
+    if(no) { 
+        no.pergunta = item.titulo; 
+        no.titulo = item.titulo; 
+        no.descricao = item.descricao || ''; 
+        no.solucao = item.descricao || '';
+        
+        // PUXA AS FOTOS DA BIBLIOTECA PARA O FLUXO
+        if(item.fotos && item.fotos.length > 0) no.fotos = [...item.fotos]; 
+        
+        // PUXA O ÁUDIO DA BIBLIOTECA PARA O FLUXO
+        if(item.audio) no.audio = item.audio; 
+    }
+    
+    // ATUALIZA A TELA DO EDITOR PARA MOSTRAR O PLAYER
+    document.getElementById('nosEditorContainer').innerHTML = buildNosEditor(window._nosEditor, null);
+    toast('✅ Importado com Mídia!', 'cyan');
+    
+  } else if(tipo === 'fluxo_opt') {
+    const inputEl = document.getElementById('opt_label_' + refId);
+    if(inputEl) inputEl.value = item.titulo || '';
+    
+    document.getElementById('bibResults_'+refId).innerHTML = '';
+    document.querySelector('#bibResults_'+refId).previousElementSibling.value = '';
+    toast('✅ Opção importada!', 'cyan');
+  }
+};
+
+function renderFotosPreviews(){
+  const el=document.getElementById('photoPreviews');if(!el)return;
+  el.innerHTML=(window._stepFotosTemp||[]).map((f,i)=>`<div class="photo-thumb"><img src="${f}" alt="${i+1}"><div class="photo-del" onclick="removerFotoTemp(${i})">✕</div></div>`).join('');
+}
+window.removerFotoTemp=idx=>{if(window._stepFotosTemp)window._stepFotosTemp.splice(idx,1);renderFotosPreviews();};
+window.adicionarFotos=async e=>{
+  const files=Array.from(e.target.files||[]);if(!files.length)return;if(!window._stepFotosTemp)window._stepFotosTemp=[];
+  for(const f of files){window._stepFotosTemp.push(await comprimirImagem(f));}
+  renderFotosPreviews();e.target.value='';
+};
+function fecharModal(){document.querySelectorAll('.modal-bg').forEach(e=>e.remove());}
+
+/* ══ EXPORT/IMPORT ══ */
+let _exportSelecionados = new Set(); // Para Procedimentos
+let _exportFluxosSel = new Set();    // Para Fluxos
+let _exportBibCompleta = true;       // Para a Biblioteca
+
+function abrirModalExportImport(){
+  fecharModal();
+  _exportSelecionados = new Set(S.procedimentos.map(p=>p.id));
+  _exportFluxosSel = new Set(S.fluxos.map(f=>f.id));
+  _exportBibCompleta = true;
+  
+  const bg=document.createElement('div');bg.className='modal-bg';bg.onclick=e=>{if(e.target===bg)fecharModal();};
+  renderExportModal(bg);
+  document.body.appendChild(bg);
+}
+
+function renderExportModal(bg){
+  if(!bg) bg = document.querySelector('.modal-bg');
+  if(!bg) return;
+  
+  bg.innerHTML=`<div class="modal">
+    <div class="modal-handle"></div>
+    <h2><span style="color:var(--yellow)">⇅</span> BACKUP DO SISTEMA</h2>
+    
+    <div style="font-size:12px;color:var(--chrome);margin-bottom:8px;line-height:1.5;">
+      Escolha o que deseja exportar. Recomendamos sempre exportar a <b>Biblioteca</b> junto, pois os procedimentos e fluxos dependem dela.
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px;">
+      <div class="label" style="color:var(--yellow)">📋 PROCEDIMENTOS</div>
+      <div style="max-height:120px; overflow-y:auto; background:rgba(0,0,0,.2); border-radius:var(--r); padding:4px; border:1px solid rgba(255,255,255,.05);">
+        ${S.procedimentos.length===0?`<div style="font-family:var(--font-mono);font-size:10px;color:var(--chrome);text-transform:uppercase;text-align:center;padding:10px">Nenhum procedimento</div>`:S.procedimentos.map(p=>`
+          <div class="export-item" style="padding:6px 10px; border:none; background:transparent;">
+            <div class="export-cb${_exportSelecionados.has(p.id)?' on':''}" id="ecb_proc_${p.id}" onclick="toggleExportCb(${p.id}, 'proc')">${_exportSelecionados.has(p.id)?'✓':''}</div>
+            <div style="flex:1;min-width:0"><div class="export-name" style="font-size:14px;">${esc(p.nome)}</div></div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px;">
+      <div class="label" style="color:var(--cyan2)">🔀 FLUXOS DIAGNÓSTICOS</div>
+      <div style="max-height:120px; overflow-y:auto; background:rgba(0,0,0,.2); border-radius:var(--r); padding:4px; border:1px solid rgba(255,255,255,.05);">
+        ${S.fluxos.length===0?`<div style="font-family:var(--font-mono);font-size:10px;color:var(--chrome);text-transform:uppercase;text-align:center;padding:10px">Nenhum fluxo</div>`:S.fluxos.map(f=>`
+          <div class="export-item" style="padding:6px 10px; border:none; background:transparent;">
+            <div class="export-cb${_exportFluxosSel.has(f.id)?' on':''}" id="ecb_fluxo_${f.id}" onclick="toggleExportCb(${f.id}, 'fluxo')" style="border-color:rgba(34,211,238,.3); color:var(--cyan2); background:${_exportFluxosSel.has(f.id)?'rgba(34,211,238,.2)':'transparent'}">${_exportFluxosSel.has(f.id)?'✓':''}</div>
+            <div style="flex:1;min-width:0"><div class="export-name" style="font-size:14px;">${esc(f.nome)}</div></div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(251,146,60,.1);border-radius:var(--r);border:1px solid rgba(251,146,60,.3);cursor:pointer;" onclick="toggleBibExport()">
+       <div class="export-cb${_exportBibCompleta?' on':''}" style="border-color:#fb923c; color:#fb923c; background:${_exportBibCompleta?'rgba(251,146,60,.2)':'transparent'}">${_exportBibCompleta?'✓':''}</div>
+       <div style="flex:1;">
+         <div class="export-name" style="color:#fb923c;">📚 Exportar toda a Biblioteca</div>
+         <div style="font-size:10px;color:var(--chrome);margin-top:2px;">Garante que os passos e imagens não sejam perdidos.</div>
+       </div>
+    </div>
+
+    <div style="display:flex;gap:6px;margin-top:14px">
+      <button class="btn steel sm" onclick="selecionarTodosExport(true)">✓ Tudo</button>
+      <button class="btn steel sm" onclick="selecionarTodosExport(false)">✗ Nada</button>
+      <button class="btn yellow sm" onclick="executarExport()" style="flex:2">⬇ BAIXAR BACKUP</button>
+    </div>
+    
+    <div class="sep" style="margin:16px 0"></div>
+    
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div class="label" style="color:var(--green2)">RESTAURAR BACKUP</div>
+      <button class="btn ghost" style="border-color:var(--green2); color:var(--green2)" onclick="document.getElementById('importFileInput').click()">⬆ SELECIONAR ARQUIVO .JSON</button>
+    </div>
+  </div>`;
+}
+
+window.toggleExportCb = (id, tipo) => {
+  if(tipo === 'proc'){
+     if(_exportSelecionados.has(id)) _exportSelecionados.delete(id); else _exportSelecionados.add(id);
+  } else {
+     if(_exportFluxosSel.has(id)) _exportFluxosSel.delete(id); else _exportFluxosSel.add(id);
+  }
+  renderExportModal();
+};
+
+window.toggleBibExport = () => {
+   _exportBibCompleta = !_exportBibCompleta;
+   renderExportModal();
+};
+
+window.selecionarTodosExport = (sel) => {
+  if(sel){
+    S.procedimentos.forEach(p=>_exportSelecionados.add(p.id));
+    S.fluxos.forEach(f=>_exportFluxosSel.add(f.id));
+    _exportBibCompleta = true;
+  } else {
+    _exportSelecionados.clear();
+    _exportFluxosSel.clear();
+    _exportBibCompleta = false;
+  }
+  renderExportModal();
+};
+
+window.executarExport = () => {
+  if(!_exportSelecionados.size && !_exportFluxosSel.size && !_exportBibCompleta){
+    toast('⚠ Selecione pelo menos um item para fazer backup!',''); return;
+  }
+  
+  // Limpa os IDs locais para não dar conflito em outro aparelho
+  const procs = S.procedimentos.filter(p=>_exportSelecionados.has(p.id)).map(p=>{const{id,...rest}=p;return{...rest,_exportId:id};});
+  const fluxos = S.fluxos.filter(f=>_exportFluxosSel.has(f.id)).map(f=>{const{id,...rest}=f;return{...rest,_exportId:id};});
+  const bib = _exportBibCompleta ? S.biblioteca.map(b=>{const{id,...rest}=b;return{...rest,_exportId:id};}) : [];
+
+  const json = JSON.stringify({
+    mecanicoPro: true, 
+    versao: '3.0', 
+    exportadoEm: Date.now(),
+    procedimentos: procs,
+    fluxos: fluxos,
+    biblioteca: bib
+  });
+  
+  const blob = new Blob([json], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `MecanicoPro_Backup_${new Date().toISOString().slice(0,10)}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  
+  toast(`✅ Backup concluído e baixado!`, 'ok');
+  fecharModal();
+};
+
+window.importarArquivo = async e => {
+  const file = e.target.files?.[0];
+  if(!file) return;
+  e.target.value = ''; // Reseta o input file
+  
+  // Exibe a tela de carregamento, pois importar fotos grandes pode demorar 1 ou 2 segundos
+  const loading = document.getElementById('loading');
+  if(loading) loading.style.display = 'flex';
+  
+  try {
+    const txt = await file.text();
+    const dados = JSON.parse(txt);
+    
+    if(!dados.mecanicoPro){
+      toast('❌ O arquivo selecionado não é um backup do MecânicoPro!', 'error');
+      if(loading) loading.style.display = 'none';
+      return;
+    }
+    
+    let importProc = 0, importFluxo = 0, importBib = 0;
+
+    // 1. IMPORTAR BIBLIOTECA (Passa pela função inteligente anti-duplicata)
+    if(dados.biblioteca && Array.isArray(dados.biblioteca)){
+        for(const b of dados.biblioteca){
+           const id = await salvarNaBiblioteca(b); 
+           if(id) importBib++;
+        }
+    }
+
+    // 2. IMPORTAR PROCEDIMENTOS
+    if(dados.procedimentos && Array.isArray(dados.procedimentos)){
+        for(const p of dados.procedimentos){
+          const{_exportId,...proc}=p;
+          const nomeExiste = S.procedimentos.some(x=>x.nome===proc.nome);
+          if(nomeExiste) proc.nome = proc.nome + ' (Cópia)';
+          proc.criadoEm = proc.criadoEm || Date.now();
+          proc.atualizadoEm = Date.now();
+          
+          const id = await DB.put('procedimentos', proc);
+          proc.id = id;
+          S.procedimentos.push(proc);
+          importProc++;
+          
+          // Se o proc tiver passos internos que não estavam na array de biblioteca, ele puxa também
+          for(const s of proc.steps||[]){
+             await salvarNaBiblioteca({titulo:s.titulo, descricao:s.descricao||'', categoria:proc.categoria||'', fotos:s.fotos||[], alerta:s.alerta||'', origem:'Procedimento', origemId:proc.id+':'+s.id});
+          }
+        }
+    }
+
+    // 3. IMPORTAR FLUXOS
+    if(dados.fluxos && Array.isArray(dados.fluxos)){
+        for(const f of dados.fluxos){
+          const{_exportId,...fluxo}=f;
+          const nomeExiste = S.fluxos.some(x=>x.nome===fluxo.nome);
+          if(nomeExiste) fluxo.nome = fluxo.nome + ' (Cópia)';
+          fluxo.criadoEm = fluxo.criadoEm || Date.now();
+          fluxo.atualizadoEm = Date.now();
+          
+          const id = await DB.put('fluxos', fluxo);
+          fluxo.id = id;
+          S.fluxos.push(fluxo);
+          importFluxo++;
+        }
+    }
+
+    S.biblioteca = await DB.getAll('biblioteca');
+    fecharModal();
+    if(loading) loading.style.display = 'none';
+    toast(`✅ RESTAURADO: ${importProc} Procedimentos, ${importFluxo} Fluxos e ${importBib} Itens na Biblioteca!`, 'ok');
+    render();
+    
+  } catch(err) {
+    console.error(err);
+    if(loading) loading.style.display = 'none';
+    toast('❌ Erro ao ler arquivo! Pode estar corrompido.', 'error');
+  }
+};
+
+/* =======================================================
+   MÁQUINA DE ESTADO DO FLUXO (O Cérebro Mágico)
+   ======================================================= */
+window.sincronizarDOMParaMemoria = () => {
+  window._nosEditor.forEach(no => {
+    const tEl = document.getElementById('no_titulo_'+no.id);
+    if(tEl) { no.pergunta = tEl.value; no.titulo = tEl.value; }
+    
+    if(no.tipo === 'diagnostico') {
+      const dEl = document.getElementById('no_desc_'+no.id);
+      if(dEl) { no.descricao = dEl.value; no.solucao = dEl.value; }
+      const pEl = document.getElementById('no_proc_'+no.id);
+      // CORREÇÃO: Transforma o valor em número para não perder a seleção!
+      if(pEl) no.procId = pEl.value ? parseInt(pEl.value) : null; 
+    } else {
+      (no.opcoes || []).forEach((o, oi) => {
+        const lEl = document.getElementById(`opt_label_${no.id}_${oi}`);
+        if(lEl) o.label = lEl.value;
+        const destEl = document.getElementById(`opt_dest_${no.id}_${oi}`);
+        if(destEl) {
+           o.destinoId = destEl.value === 'diagnostico_direto' ? null : destEl.value;
+           o.destino = destEl.value === 'diagnostico_direto' ? 'diagnostico_direto' : '';
+        }
+      });
+    }
+  });
+};
+
+window.autoCriarNo = (origemId, opcaoIdx, tipo) => {
+    window.sincronizarDOMParaMemoria(); // Salva tudo que já foi digitado para não perder!
+    
+    const novoId = 'n' + Date.now();
+    window._nosEditor.push({id: novoId, tipo: tipo, pergunta: '', opcoes: []});
+    
+    const noOrigem = window._nosEditor.find(n => n.id === origemId);
+    if(noOrigem && noOrigem.opcoes[opcaoIdx]) {
+        noOrigem.opcoes[opcaoIdx].destinoId = novoId; // Liga automaticamente!
+        noOrigem.opcoes[opcaoIdx].destino = '';
+    }
+    
+    // Atualiza a tela toda
+    document.getElementById('nosEditorContainer').innerHTML = buildNosEditor(window._nosEditor, null);
+    
+    // Desce a tela direto para o nó recém-criado com um flash de luz
+    setTimeout(() => {
+        const novoEl = document.getElementById('noeditor_' + novoId);
+        if(novoEl) {
+            novoEl.scrollIntoView({behavior: 'smooth', block: 'center'});
+            novoEl.style.boxShadow = '0 0 20px var(--yellow)';
+            setTimeout(() => novoEl.style.transition = 'box-shadow 1s', 100);
+            setTimeout(() => novoEl.style.boxShadow = 'none', 1500);
+        }
+    }, 100);
+};
+
+window.adicionarNoEditorMagico = () => {
+    window.sincronizarDOMParaMemoria();
+    window._nosEditor.push({id: 'n'+Date.now(), tipo: 'pergunta', pergunta: '', opcoes: []});
+    document.getElementById('nosEditorContainer').innerHTML = buildNosEditor(window._nosEditor, null);
+    setTimeout(() => {
+        const container = document.getElementById('nosEditorContainer');
+        if(container.lastElementChild) container.lastElementChild.scrollIntoView({behavior: 'smooth', block: 'center'});
+    }, 100);
+};
+
+window.adicionarOpcaoEditorMagico = (noId) => {
+    window.sincronizarDOMParaMemoria();
+    const no = window._nosEditor.find(n => n.id === noId);
+    if(no) {
+        if(!no.opcoes) no.opcoes = [];
+        no.opcoes.push({label:'', destinoId:'', destino:''});
+        document.getElementById('nosEditorContainer').innerHTML = buildNosEditor(window._nosEditor, null);
+    }
+};
+
+window.trocarTipoNoMagico = (noId, tipo) => {
+    window.sincronizarDOMParaMemoria();
+    const no = window._nosEditor.find(n => n.id === noId);
+    if(no) { no.tipo = tipo; document.getElementById('nosEditorContainer').innerHTML = buildNosEditor(window._nosEditor, null); }
+};
+
+window.removerNoMagico = (noId) => {
+    if(!confirm('Remover este bloco?')) return;
+    window.sincronizarDOMParaMemoria();
+    window._nosEditor = window._nosEditor.filter(n => n.id !== noId);
+    document.getElementById('nosEditorContainer').innerHTML = buildNosEditor(window._nosEditor, null);
+};
+
+window.removerOpcaoEditor = (noId, oi) => {
+    window.sincronizarDOMParaMemoria();
+    const no = window._nosEditor.find(n => n.id === noId);
+    if(no) { no.opcoes.splice(oi, 1); document.getElementById('nosEditorContainer').innerHTML = buildNosEditor(window._nosEditor, null); }
+};
+
+/* =======================================================
+   A NOVA INTERFACE DE FLUXO (Método Idiota-Proof)
+   ======================================================= */
+function abrirModalFluxo(fluxo){
+  fecharModal();
+  window._nosEditor = fluxo && fluxo.nos ? JSON.parse(JSON.stringify(fluxo.nos)) : [];
+  
+  const bg=document.createElement('div');bg.className='modal-bg';bg.onclick=e=>{if(e.target===bg)fecharModal();};
+  const nosHtml=buildNosEditor(window._nosEditor,fluxo);
+  
+  bg.innerHTML=`<div class="modal cyan-top" style="max-height:95vh">
+    <div class="modal-handle"></div>
+    <h2 style="color:var(--cyan2)">${fluxo?'✏ EDITAR':'＋ NOVO'} FLUXO</h2>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div><div class="label">Nome *</div><input type="text" id="fNome" class="input" value="${esc(fluxo?.nome||'')}" placeholder="Ex: Diagnóstico de freios…" maxlength="80"></div>
+      <div style="display:flex;gap:8px">
+        <div style="flex:1"><div class="label">Descrição</div><textarea id="fDesc" class="textarea" style="min-height:50px" placeholder="Descreva…" maxlength="400">${esc(fluxo?.descricao||'')}</textarea></div>
+        <div style="flex:1"><div class="label">Categoria</div><input type="text" id="fCat" class="input" value="${esc(fluxo?.categoria||'')}" placeholder="Motor, Freios…"></div>
+      </div>
+    </div>
+    <div class="sep" style="margin:12px 0"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <div class="label" style="margin:0; font-size:14px; color:var(--cyan2)">🧱 CONSTRUTOR DE FLUXO</div>
+      <button class="btn ghost-cyan sm" style="width:auto;padding:5px 11px;font-size:11px" onclick="adicionarNoEditorMagico()">＋ NÓ SOLTO</button>
+    </div>
+    <div id="nosEditorContainer" style="display:flex;flex-direction:column;gap:14px">${nosHtml}</div>
+    <div style="display:flex;gap:8px;margin-top:14px">
+      ${fluxo?`<button class="btn red sm" onclick="A.deletarFluxo(${fluxo.id})">🗑</button>`:''}
+      <button class="btn steel sm" onclick="fecharModal()">Cancelar</button>
+      <button class="btn cyan sm" onclick="salvarFluxoComNos()" style="flex:2">💾 SALVAR FLUXO COMPLETO</button>
+    </div>
+  </div>`;
+  document.body.appendChild(bg);
+  setTimeout(()=>document.getElementById('fNome')?.focus(),120);
+}
+
+function buildNoEditorCard(no,idx,todos){
+  const isPerguntar = no.tipo !== 'diagnostico';
+  const outrosNos = todos.filter(x => x.id !== no.id);
+  
+  const opcoesHtml = isPerguntar ? (no.opcoes||[]).map((o,oi) => `
+    <div class="opt-editor-row" id="optrow_${no.id}_${oi}" style="flex-direction:column; align-items:stretch; gap:6px; background:rgba(0,0,0,.2); border-radius:var(--r); padding:12px; margin-bottom:10px; border:1px solid rgba(255,255,255,.05);">
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="background:var(--cyan);color:var(--ink);width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold; flex-shrink:0;">${String.fromCharCode(65+oi)}</div>
+        <span style="font-size:14px;opacity:0.7">🔍</span>
+        <input type="text" placeholder="Importe uma resposta da biblioteca..." oninput="filtrarBibModal(this.value, 'fluxo_opt', '${no.id}_${oi}')" style="flex:1; background:rgba(0,0,0,.3); border:1px solid rgba(34,211,238,.3); color:var(--cyan2); font-size:12px; padding:8px; border-radius:4px; outline:none;">
+        <button onclick="removerOpcaoEditor('${no.id}',${oi})" style="background:rgba(192,57,43,.15);color:#e74c3c;border:1px solid rgba(192,57,43,.2);border-radius:4px;padding:8px 12px;cursor:pointer;font-size:12px">✕</button>
+      </div>
+      <div id="bibResults_${no.id}_${oi}" style="display:flex; flex-direction:column; gap:2px; padding-left:42px;"></div>
+      <div style="display:flex;align-items:center;gap:8px; padding-left:42px;">
+        <input class="opt-input" id="opt_label_${no.id}_${oi}" value="${esc(o.label||'')}" placeholder="Ou digite o texto da resposta manualmente aqui..." style="font-size:14px; padding:10px; border-color:rgba(255,255,255,.1);">
+      </div>
+      <div style="margin-left:42px; display:flex; flex-direction:column; gap:8px; margin-top:8px; background:rgba(34,211,238,0.05); padding:10px; border-radius:6px; border-left:3px solid var(--cyan2);">
+        <div style="font-size:10px; color:var(--cyan2); text-transform:uppercase; font-weight:bold; letter-spacing:0.5px;">↳ O que acontece se o cliente escolher esta resposta?</div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+           <select class="opt-dest-sel" id="opt_dest_${no.id}_${oi}" style="flex:1; min-width:140px; padding:8px; font-size:12px; height:34px;">
+             <option value="">Ainda não decidi...</option>
+             ${outrosNos.map(x=>`<option value="${x.id}" ${o.destinoId===x.id?'selected':''}>${x.tipo==='diagnostico'?'✅':'❓'} ${esc((x.pergunta||x.titulo||'').slice(0,30))}</option>`).join('')}
+             <option value="diagnostico_direto" ${o.destino==='diagnostico_direto'?'selected':''}>✓ Dar diagnóstico final (Sair)</option>
+           </select>
+           <button onclick="autoCriarNo('${no.id}', ${oi}, 'pergunta')" style="height:34px; background:rgba(34,211,238,.15); color:var(--cyan2); border:1px solid rgba(34,211,238,.4); padding:0 10px; border-radius:4px; font-size:11px; font-weight:bold; cursor:pointer;">＋ ❓ Nova Pergunta</button>
+           <button onclick="autoCriarNo('${no.id}', ${oi}, 'diagnostico')" style="height:34px; background:rgba(46,204,113,.15); color:var(--green2); border:1px solid rgba(46,204,113,.4); padding:0 10px; border-radius:4px; font-size:11px; font-weight:bold; cursor:pointer;">＋ ✅ Diagnóstico Final</button>
+        </div>
+      </div>
+    </div>`).join('') : 
+  
+  `<div style="padding:12px">
+    <div class="label">Qual a solução do problema?</div>
+    <textarea class="textarea" id="no_desc_${no.id}" style="min-height:50px" placeholder="Descreva a conclusão para o mecânico executar...">${esc(no.descricao||no.solucao||'')}</textarea>
+    <div class="label" style="margin-top:10px">Vincular a um Procedimento prático (opcional)</div>
+    <select class="input" id="no_proc_${no.id}"><option value="">Nenhum</option>${S.procedimentos.map(p=>`<option value="${p.id}" ${no.procId===p.id?'selected':''}>${esc(p.nome)}</option>`).join('')}</select>
+  </div>`;
+
+  // HTML da galeria de fotos do nó
+  // HTML da galeria de fotos e gravação de áudio do nó
+  // HTML da galeria de fotos e gravação de áudio do nó
+  const fotosNoHtml = `
+    <div style="margin-top:10px; padding:10px; background:rgba(0,0,0,.2); border-radius:var(--r); border:1px dashed rgba(255,255,255,.1);">
+      <div class="label" style="margin-bottom:6px;">Mídia do Passo: 📷 Fotos | 🎙 PC | 📱 Celular</div>
+      
+      <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+        
+        <div class="photo-drop" style="width:45px; height:45px; padding:0; display:flex; align-items:center; justify-content:center; cursor:pointer;" onclick="document.getElementById('file_${no.id}').click()" title="Adicionar Fotos">
+           <span style="font-size:18px; opacity:0.6">📷</span>
+        </div>
+        
+        <div id="btnGravar_${no.id}" class="photo-drop" style="width:45px; height:45px; padding:0; display:flex; align-items:center; justify-content:center; cursor:pointer; border-color:rgba(34,211,238,.3); background:rgba(34,211,238,.02); transition:all 0.3s;" onclick="toggleGravacaoNativa('fluxo', '${no.id}')" title="Gravar direto no navegador">
+           <span style="font-size:18px; opacity:0.6">🎙</span>
+        </div>
+
+        <div class="photo-drop" style="width:45px; height:45px; padding:0; display:flex; align-items:center; justify-content:center; cursor:pointer; border-color:rgba(245,200,0,.3); background:rgba(245,200,0,.02);" onclick="document.getElementById('audioFile_${no.id}').click()" title="Gravar com o App do Celular">
+           <span style="font-size:18px; opacity:0.6">📱</span>
+        </div>
+        <input type="file" id="audioFile_${no.id}" accept="audio/*" capture="microphone" style="display:none" onchange="adicionarAudioTemp(event, 'fluxo', '${no.id}')">
+
+        ${(no.fotos||[]).map((f,i)=>`
+          <div class="photo-thumb" style="width:45px;height:45px"><img src="${f}"><div class="photo-del" style="width:16px;height:16px;font-size:10px;top:2px;right:2px;" onclick="removerFotoNo('${no.id}',${i})">✕</div></div>
+        `).join('')}
+
+      </div>
+      
+      ${no.audio ? `<div style="display:flex;align-items:center;gap:10px;background:rgba(245,200,0,.1);padding:6px;border-radius:4px;border:1px solid rgba(245,200,0,.3);margin-top:8px;">
+         <audio controls src="${no.audio}" style="height:30px;flex:1"></audio>
+         <button onclick="removerAudioTemp('fluxo', '${no.id}')" style="background:rgba(192,57,43,.8);color:white;border:none;border-radius:4px;padding:4px 8px;cursor:pointer;font-size:10px;font-weight:bold">✕</button>
+      </div>` : ''}
+
+      <input type="file" id="file_${no.id}" accept="image/*" multiple style="display:none" onchange="adicionarFotoNo(event, '${no.id}')">
+    </div>
+  `;
+
+  return `
+  <div class="no-card-editor" id="noeditor_${no.id}" style="border:2px solid ${isPerguntar ? 'rgba(34,211,238,.4)' : 'rgba(46,204,113,.4)'}; background:var(--steel);">
+    <div class="no-card-header" style="background:${isPerguntar ? 'rgba(34,211,238,.08)' : 'rgba(46,204,113,.08)'}; border-bottom:1px solid ${isPerguntar ? 'rgba(34,211,238,.2)' : 'rgba(46,204,113,.2)'};">
+      <div class="no-card-num" style="color:${isPerguntar ? 'var(--cyan2)' : 'var(--green2)'}; font-size:18px;">${idx+1}</div>
+      <input class="opt-input" id="no_titulo_${no.id}" value="${esc(no.pergunta||no.titulo||'')}" placeholder="${isPerguntar?'Digite a pergunta principal…':'Qual o nome do defeito encontrado?…'}" style="flex:1;margin:0 8px;font-size:16px; font-weight:bold; border-color:rgba(255,255,255,.1);">
+      <select class="opt-dest-sel" id="no_tipo_${no.id}" style="width:123px; border-color:${isPerguntar ? 'rgba(34,211,238,.4)' : 'rgba(46,204,113,.4)'}; color:${isPerguntar ? 'var(--cyan2)' : 'var(--green2)'}; font-weight:bold;" onchange="trocarTipoNoMagico('${no.id}',this.value)">
+        <option value="pergunta" ${isPerguntar?'selected':''}>❓ Pergunta</option>
+        <option value="diagnostico" ${!isPerguntar?'selected':''}>✅ Diagnóstico</option>
+      </select>
+      <button onclick="removerNoMagico('${no.id}')" style="background:rgba(192,57,43,.15);color:#e74c3c;border:1px solid rgba(192,57,43,.3);border-radius:4px;padding:6px 10px;cursor:pointer;font-size:12px;margin-left:8px; font-weight:bold;">✕</button>
+    </div>
+    
+    <div style="padding:10px 12px; border-bottom:1px solid rgba(255,255,255,.05); background:rgba(0,0,0,.15)">
+      <div class="label" style="color:var(--yellow)">🔍 PUXAR DA BIBLIOTECA (Título e Fotos)</div>
+      <div style="display:flex;align-items:center;gap:6px">
+        <span style="font-size:14px;opacity:0.7">🔍</span>
+        <input type="text" class="input" placeholder="Buscar pergunta ou diagnóstico salvo..." oninput="filtrarBibModal(this.value, 'fluxo', '${no.id}')" style="font-size:13px; padding:8px 10px; flex:1;">
+      </div>
+      <div id="bibResults_${no.id}" style="display:flex;flex-direction:column;gap:4px;margin-top:6px;max-height:120px;overflow-y:auto"></div>
+      
+      ${fotosNoHtml}
+    </div>
+
+    <div id="no_opts_${no.id}" style="padding:10px 12px 0;">${opcoesHtml}</div>
+    ${isPerguntar ? `<div style="padding:4px 12px 14px;"><button onclick="adicionarOpcaoEditorMagico('${no.id}')" style="background:rgba(34,211,238,.1);color:var(--cyan2);border:1px dashed rgba(34,211,238,.4);border-radius:var(--r);padding:12px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;cursor:pointer;width:100%; transition:all 0.2s;">＋ ADICIONAR OPÇÃO DE RESPOSTA</button></div>` : ''}
+  </div>`;
+}
+
+// LÓGICA DAS FOTOS NO CONSTRUTOR DE FLUXO
+window.adicionarFotoNo = async (e, noId) => {
+    const files = Array.from(e.target.files||[]);
+    if(!files.length) return;
+    window.sincronizarDOMParaMemoria(); 
+    const no = window._nosEditor.find(n => n.id === noId);
+    if(!no) return;
+    if(!no.fotos) no.fotos = [];
+    for(const f of files) no.fotos.push(await comprimirImagem(f));
+    document.getElementById('nosEditorContainer').innerHTML = buildNosEditor(window._nosEditor, null);
+};
+window.removerFotoNo = (noId, idx) => {
+    window.sincronizarDOMParaMemoria();
+    const no = window._nosEditor.find(n => n.id === noId);
+    if(no && no.fotos) no.fotos.splice(idx, 1);
+    document.getElementById('nosEditorContainer').innerHTML = buildNosEditor(window._nosEditor, null);
+};
+
+/* ══ UTILS ══ */
+function lightbox(src){document.querySelectorAll('.lightbox').forEach(e=>e.remove());const lb=document.createElement('div');lb.className='lightbox';lb.onclick=()=>lb.remove();lb.innerHTML=`<img src="${src}" alt="Foto">`;document.body.appendChild(lb);}
+function toast(msg,tipo){if(!msg)return;document.querySelectorAll('.toast').forEach(e=>e.remove());const t=document.createElement('div');t.className='toast'+(tipo==='error'?' error':tipo==='ok'?' ok':tipo==='cyan'?' cyan':tipo==='orange'?' orange':'');t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2800);}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function v(id){return document.getElementById(id)?.value?.trim()||'';}
+function fmtDate(ts){if(!ts)return'-';const d=new Date(ts);return`${d.getDate().toString().padStart(2,'0')}/${(d.getMonth()+1).toString().padStart(2,'0')}/${d.getFullYear()}`;}
+function fmtDateFull(ts){if(!ts)return'-';const d=new Date(ts);return`${d.getDate().toString().padStart(2,'0')}/${(d.getMonth()+1).toString().padStart(2,'0')} ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`;}
+
+/* ══ MÓDULO DE ÁUDIO & TELA DE BLOQUEIO ══ */
+window.adicionarAudioTemp = (e, alvo, id) => {
+  const file = e.target.files?.[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    if(alvo === 'step') { window._stepAudioTemp = reader.result; renderAudioPreview('step'); }
+    if(alvo === 'bib') { window._bibAudioTemp = reader.result; renderAudioPreview('bib'); }
+    if(alvo === 'fluxo') { 
+        window.sincronizarDOMParaMemoria();
+        const no = window._nosEditor.find(n => n.id === id);
+        if(no) no.audio = reader.result;
+        document.getElementById('nosEditorContainer').innerHTML = buildNosEditor(window._nosEditor, null);
+    }
+  };
+  reader.readAsDataURL(file); // Converte o áudio para texto longo e salva no IndexedDB!
+  e.target.value = '';
+};
+
+window.removerAudioTemp = (alvo, id) => {
+  if(alvo === 'step') { window._stepAudioTemp = null; renderAudioPreview('step'); }
+  if(alvo === 'bib') { window._bibAudioTemp = null; renderAudioPreview('bib'); }
+  if(alvo === 'fluxo') { 
+        window.sincronizarDOMParaMemoria();
+        const no = window._nosEditor.find(n => n.id === id);
+        if(no) no.audio = null;
+        document.getElementById('nosEditorContainer').innerHTML = buildNosEditor(window._nosEditor, null);
+  }
+};
+
+window.renderAudioPreview = (alvo) => {
+  const audio = alvo === 'step' ? window._stepAudioTemp : window._bibAudioTemp;
+  const el = document.getElementById(alvo + 'AudioPreview');
+  if(!el) return;
+  if(!audio) { el.innerHTML = ''; return; }
+  el.innerHTML = `<div style="display:flex;align-items:center;gap:10px;background:rgba(245,200,0,.1);padding:8px;border-radius:var(--r);border:1px solid rgba(245,200,0,.3);margin-top:6px;">
+    <audio controls src="${audio}" style="height:36px;flex:1"></audio>
+    <button onclick="removerAudioTemp('${alvo}')" style="background:rgba(192,57,43,.8);color:white;border:none;border-radius:4px;padding:6px 10px;cursor:pointer;font-size:12px;font-weight:bold">✕</button>
+  </div>`;
+};
+
+// MÁGICA DA TELA DE BLOQUEIO (Mostra o título do passo no celular bloqueado!)
+window.tocarAudioLockScreen = (titulo) => {
+  if ('mediaSession' in navigator) {
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: titulo,
+      artist: 'Mecânico Pro',
+      album: 'Instruções em Áudio'
+    });
+  }
+};
+
+/* ══ GRAVADOR NATIVO DE VOZ (PC e Celular) ══ */
+window._mediaRecorder = null;
+window._audioChunks = [];
+
+window.toggleGravacaoNativa = async (alvo, id) => {
+  const btnId = alvo === 'fluxo' ? 'btnGravar_' + id : 'btnGravar_' + alvo;
+  const btn = document.getElementById(btnId);
+
+  // SE JÁ ESTIVER GRAVANDO, ELE PARA E SALVA
+  if (window._mediaRecorder && window._mediaRecorder.state === 'recording') {
+    window._mediaRecorder.stop();
+    if(btn) {
+      btn.innerHTML = '<div style="font-size:22px;opacity:.6">🎙</div>';
+      btn.classList.remove('gravando-ativo');
+    }
+    return;
+  }
+
+  // SE NÃO ESTIVER GRAVANDO, ELE PEDE O MICROFONE E COMEÇA
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    window._mediaRecorder = new MediaRecorder(stream);
+    window._audioChunks = [];
+
+    window._mediaRecorder.ondataavailable = e => {
+      if (e.data.size > 0) window._audioChunks.push(e.data);
+    };
+
+    window._mediaRecorder.onstop = () => {
+      // Quando parar, converte a gravação para o formato Base64 do banco de dados
+      const blob = new Blob(window._audioChunks, { type: 'audio/webm' });
+      const reader = new FileReader();
+      reader.onload = () => {
+        if(alvo === 'step') { window._stepAudioTemp = reader.result; renderAudioPreview('step'); }
+        if(alvo === 'bib') { window._bibAudioTemp = reader.result; renderAudioPreview('bib'); }
+        if(alvo === 'fluxo') { 
+            window.sincronizarDOMParaMemoria();
+            const no = window._nosEditor.find(n => n.id === id);
+            if(no) no.audio = reader.result;
+            document.getElementById('nosEditorContainer').innerHTML = buildNosEditor(window._nosEditor, null);
+        }
+      };
+      reader.readAsDataURL(blob);
+      // Desliga a luz vermelha do microfone do PC
+      stream.getTracks().forEach(track => track.stop());
+    };
+
+    window._mediaRecorder.start();
+    // Muda o visual do botão para mostrar que está gravando
+    if(btn) {
+      btn.innerHTML = '<div style="font-size:20px;color:#e74c3c">⏹ PARAR</div>';
+      btn.classList.add('gravando-ativo');
+    }
+  } catch (err) {
+    console.error("Erro no microfone:", err);
+    toast("❌ Erro: Permita o acesso ao microfone no seu navegador!", "error");
+  }
+};
+
+//funçao auxiliar para gerenciar miniaturas
+window.adicionarFotosBib = async (e) => {
+  const files = Array.from(e.target.files || []);
+  for (const f of files) {
+    window._bibFotosTemp.push(await comprimirImagem(f));
+  }
+  renderFotosBibPreviews();
+  e.target.value = '';
+};
+
+window.renderFotosBibPreviews = () => {
+  const container = document.getElementById('bibPhotoPreviews');
+  if(!container) return;
+  container.innerHTML = (window._bibFotosTemp || []).map((f, i) => `
+    <div class="photo-thumb"><img src="${f}"><div class="photo-del" onclick="removerFotoBib(${i})">✕</div></div>
+  `).join('');
+};
+
+window.removerFotoBib = (idx) => {
+  window._bibFotosTemp.splice(idx, 1);
+  renderFotosBibPreviews();
+};
+
+/* ══ INIT ══ */
+(async()=>{
+  try{
+    await DB.open();
+    [S.procedimentos,S.fluxos,S.biblioteca]=await Promise.all([DB.getAll('procedimentos'),DB.getAll('fluxos'),DB.getAll('biblioteca')]);
+    // Migrar steps existentes para biblioteca
+    for(const proc of S.procedimentos){for(const step of proc.steps||[]){const existe=S.biblioteca.find(b=>b.origemId===proc.id+':'+step.id);if(!existe){await salvarNaBiblioteca({titulo:step.titulo,descricao:step.descricao||'',categoria:proc.categoria||'',fotos:step.fotos||[],alerta:step.alerta||'',origem:'Procedimento',origemId:proc.id+':'+step.id});}}}
+    S.biblioteca=await DB.getAll('biblioteca');
+  }catch(e){console.warn('DB:',e);S.procedimentos=lsGet('procs',[]);S.fluxos=[];S.biblioteca=[];}
+  // Inicializar _nosEditor vazio
+  window._nosEditor=[];
+  await new Promise(r=>setTimeout(r,1100));
+  document.getElementById('loading').style.display='none';
+  document.getElementById('app').style.display='flex';
+  render();
+})();
+</script>
+</body>
+</html>
